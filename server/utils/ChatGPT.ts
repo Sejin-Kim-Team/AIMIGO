@@ -31,7 +31,7 @@ export class ChatGPT {
 
 export class ChatGPTBuilder {
   apiKey: string
-  model = 'gpt-4'
+  model = 'gpt-3.5-turbo'
   temperature = 0.05
   maxTokens = 512
   role: ChatCompletionRequestMessageRoleEnum = ChatCompletionRequestMessageRoleEnum.User

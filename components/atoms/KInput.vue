@@ -2,23 +2,25 @@
 const props = withDefaults(defineProps<{
   modelValue: any
   type?: 'text' | 'number'
-  playceholder?: string
+  placeholder?: string
+  disabled?: boolean
 }>(), {
   type: 'text',
 })
-const emits = defineEmits<{
-  'update:modelValue': (value: any) => void
-}>()
+const emits = defineEmits(['update:modelValue'])
 
-const vModel = useVModel(props, emits, 'modelValue')
+const vModel = useVModel(props, 'modelValue', emits)
 </script>
 
 <template>
   <input
     v-model="vModel"
     :type="type"
-    :placeholder="playceholder"
-    class="input input-bordered w-full max-w-xs"
+    :placeholder="placeholder"
+    :disabled="disabled"
+    class="input input-bordered"
+    autofocus
+    v-bind="$attrs"
   >
 </template>
 

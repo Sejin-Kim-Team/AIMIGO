@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'AIMIGO!',
       exec_mode: 'cluster',
-      instances: 'max',
+      instances: 1,
       script: 'npx',
       args: 'nuxi start',
     },

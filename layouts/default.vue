@@ -7,7 +7,7 @@ import Footer from '~/components/organisms/Footer.vue'
   <div id="app">
     <Header />
     <main>
-      <NuxtPage />
+      <NuxtPage class="h-full" />
     </main>
     <Footer />
   </div>
@@ -15,7 +15,7 @@ import Footer from '~/components/organisms/Footer.vue'
 
 <style scoped lang="scss">
 main {
-  @apply container mx-auto max-w-3xl px-6;
-  min-height: calc(100vh + 220px);
+  @apply container mx-auto max-w-3xl md:max-w-6xl px-6 mt-2 relative h-full;
+  min-height: calc(100vh + 64px);
 }
 </style>

@@ -30,4 +30,9 @@ export default defineNuxtConfig({
     right: true,
     duration: 5000,
   },
+  runtimeConfig: {
+    api: {
+      chatGptApiKey: process.env.NUXT_API_CHAT_GPT_API_KEY ?? '',
+    },
+  },
 })

@@ -26,7 +26,7 @@ const inputRef = ref<HTMLInputElement>()
 const { width, left } = useElementBounding(chatRef)
 const { focused: inputFocused } = useFocus(inputRef)
 
-const senderId = ref('SungWha Kim')
+const senderId = ref('SeongHwa Kim')
 
 async function handleSubmit() {
   const chat: Chat = {

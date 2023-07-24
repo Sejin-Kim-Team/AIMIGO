@@ -66,10 +66,6 @@ async function requestMessage(message: string) {
 
   chats.value.push(chat)
 }
-
-watchEffect(() => {
-  console.log(width.value, left.value)
-})
 </script>
 
 <template>
@@ -131,7 +127,7 @@ article {
 }
 
 .chat-wrapper {
-  height: calc(100vh - 160px);
+  height: calc(100vh - 280px);
   overflow-y: scroll;
 }
 </style>

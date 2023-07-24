@@ -13,6 +13,9 @@ import Footer from '~/components/organisms/Footer.vue'
   </div>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+main {
+  @apply container mx-auto max-w-3xl px-6;
+  min-height: calc(100vh + 220px);
+}
 </style>

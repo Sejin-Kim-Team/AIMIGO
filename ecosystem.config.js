@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'NuxtApp',
+      name: 'AIMIGO!',
       exec_mode: 'cluster',
       instances: 'max',
       script: 'npx',

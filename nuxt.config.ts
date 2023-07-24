@@ -35,4 +35,11 @@ export default defineNuxtConfig({
       chatGptApiKey: process.env.NUXT_API_CHAT_GPT_API_KEY ?? '',
     },
   },
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ['openai'],
+      },
+    },
+  },
 })

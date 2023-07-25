@@ -8,6 +8,12 @@ export interface User {
   aimigos: Aimigo[]
 }
 
+export interface UserPushUpdateRequest {
+  pushEnabled: boolean
+  pushPermitStartTime: Date | null
+  pushPermitEndTime: Date | null
+}
+
 export interface Aimigo {
   id: number
   name: string

@@ -46,6 +46,9 @@ devDependencies:
   nuxt:
     specifier: ^3.6.5
     version: 3.6.5(@types/node@18.17.0)(eslint@8.45.0)(sass@1.64.1)(typescript@5.1.6)
+  nuxt-scheduler:
+    specifier: ^0.0.16
+    version: 0.0.16
   openai:
     specifier: ^3.3.0
     version: 3.3.0
@@ -5577,6 +5580,13 @@ packages:
       - encoding
       - supports-color
 
+  /node-cron@3.0.2:
+    resolution: {integrity: sha512-iP8l0yGlNpE0e6q1o185yOApANRe47UPbLf4YxfbiNHt/RU5eBcGB/e0oudruheSf+LQeDMezqC5BVAb5wwRcQ==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      uuid: 8.3.2
+    dev: true
+
   /node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
@@ -5789,6 +5799,17 @@ packages:
       - supports-color
       - vue
     dev: false
+
+  /nuxt-scheduler@0.0.16:
+    resolution: {integrity: sha512-uZH+7IrNqEVogh9in3eftoIi/2WnKglehpsuEGXikZ/+dMSq31p9unyl8BSs4D63Ddzpx6ovFhQFDscPrucbbA==}
+    dependencies:
+      '@nuxt/kit': 3.6.5
+      defu: 6.1.2
+      node-cron: 3.0.2
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: true
 
   /nuxt-snackbar@1.0.3(vite@4.4.6)(vue@3.3.4)(vuetify@3.3.9):
     resolution: {integrity: sha512-FoS0An/0L+Cx0gz8sH6P2oW4G7uIcuqEEpgIOTmcb1a/2nyXpTtteVIDiIYgp00vJonV3Q/0Y2jpjcbmR+1yDg==}
@@ -7889,6 +7910,11 @@ packages:
       is-generator-function: 1.0.10
       is-typed-array: 1.1.12
       which-typed-array: 1.1.11
+    dev: true
+
+  /uuid@8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
     dev: true
 
   /validate-npm-package-license@3.0.4:

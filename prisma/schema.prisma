@@ -11,6 +11,10 @@ model User {
   id        String   @id @default(uuid())
   oauthId     String   @unique
   name      String?
+  pushEnabled Boolean @default(false)
+  pushPermitStartTime Int?
+  pushPermitEndTime Int?
+  lastPushTime DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   aimigos     Aimigo[]

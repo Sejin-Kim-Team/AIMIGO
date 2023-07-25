@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'AIMIGO!',
+      script: [
+        {
+          src: 'https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js',
+        },
+      ],
     },
   },
   modules: [
@@ -33,6 +38,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     api: {
       chatGptApiKey: process.env.NUXT_API_CHAT_GPT_API_KEY ?? '',
+      sentimentClientId: process.env.NUXT_API_SENTIMENT_API_CLIENT_ID ?? '',
+      sentimentClientSecret: process.env.NUXT_API_SENTIMENT_API_CLIENT_SECRET ?? '',
+      sentimentUrl: process.env.NUXT_API_SENTIMENT_URL ?? '',
+    },
+    auth: {
+      tokenUrl: process.env.NUXT_AUTH_TOKEN_URL ?? '',
+      redirectUrl: process.env.NUXT_AUTH_REDIRECT_URL ?? '',
+      clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
     },
   },
   vite: {

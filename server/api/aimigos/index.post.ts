@@ -1,11 +1,12 @@
 import { createAimigo } from '~/server/data/aimigos'
 
+interface Body {
+  userId: string
+  name: string
+  mbti: string
+}
+
 export default defineEventHandler(async (event) => {
-  let oauthId: string, name: string, mbti: string;
-  ({
-    oauthId,
-    name,
-    mbti,
-  } = await readBody(event))
-  return await createAimigo(oauthId, name, mbti)
+  const { userId, name, mbti } = await readBody<Body>(event)
+  return await createAimigo(userId, name, mbti)
 })

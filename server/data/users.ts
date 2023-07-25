@@ -10,16 +10,16 @@ export async function getUsers(): Promise<User[]> {
   })
 }
 
-export async function getUser(oauthId: string): Promise<User> {
+export async function getUser(id: string): Promise<User | null> {
   return await prisma.user.findUnique({
-    where: { oauthId },
+    where: { id },
     include: {
       aimigos: true,
     },
   })
 }
 
-export async function createUser(oauthId: string, name: string) {
+export async function createUser(oauthId: string, name: string): Promise<User> {
   return await prisma.user.create({
     data: {
       oauthId,
@@ -29,21 +29,21 @@ export async function createUser(oauthId: string, name: string) {
   })
 }
 
-export async function updateUserHeart(oauthId: string, remainedHeart: number) {
+export async function updateUserHeart(oauthId: string, remainedHeart: number): Promise<User> {
   return await prisma.user.update({
     where: { oauthId },
     data: { remainedHeart },
   })
 }
 
-export async function updateUser(oauthId: string, name: string) {
+export async function updateUser(oauthId: string, name: string): Promise<User> {
   return await prisma.user.update({
     where: { oauthId },
     data: { name },
   })
 }
 
-export async function deleteUser(oauthId: string) {
+export async function deleteUser(oauthId: string): Promise<User> {
   return await prisma.user.delete({
     where: { oauthId },
   })

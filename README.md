@@ -17,6 +17,18 @@ pnpm install
 yarn install
 ```
 
+### Database Setup
+Write DATABASE_URL in .env file.
+
+example:
+```
+DATABASE_URL="postgresql://testuser:testpassword@localhost:5432/testdb"
+```
+### Prisma Setup (Optional)
+```bash
+prisma migrate dev --name init
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:

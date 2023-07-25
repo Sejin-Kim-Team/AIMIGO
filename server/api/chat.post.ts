@@ -1,4 +1,5 @@
 import { ChatGPTBuilder } from '~/server/utils/ChatGPT'
+import { getSingleSuccessResponse } from '~/server/utils/CommonResult'
 
 interface Body {
   message: string
@@ -16,7 +17,5 @@ export default defineEventHandler(async (event) => {
 
   const response = await gptClient.chat([message])
 
-  return {
-    message: response.join('\n'),
-  }
+  return getSingleSuccessResponse(response.join('\n'))
 })

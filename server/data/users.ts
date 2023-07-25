@@ -29,22 +29,22 @@ export async function createUser(oauthId: string, name: string): Promise<User> {
   })
 }
 
-export async function updateUserHeart(oauthId: string, remainedHeart: number): Promise<User> {
+export async function updateUserHeart(id: string, remainedHeart: number): Promise<User> {
   return await prisma.user.update({
-    where: { oauthId },
+    where: { id },
     data: { remainedHeart },
   })
 }
 
-export async function updateUser(oauthId: string, name: string): Promise<User> {
+export async function updateUser(id: string, name: string): Promise<User> {
   return await prisma.user.update({
-    where: { oauthId },
+    where: { id },
     data: { name },
   })
 }
 
-export async function deleteUser(oauthId: string): Promise<User> {
+export async function deleteUser(id: string): Promise<User> {
   return await prisma.user.delete({
-    where: { oauthId },
+    where: { id },
   })
 }

@@ -1,5 +1,7 @@
 import { $fetch } from 'ofetch'
 import { createUser, getUser } from '~/server/data/users'
+import { StatusCode } from '~/server/types/types'
+import { getCreatedResponse, getErrorResponse, getSingleSuccessResponse } from '~/server/utils/CommonResult'
 
 // TODO : FE와 함께 개발 후 테스트 해보면서 수정 필요.
 interface TokenResponse {
@@ -24,14 +26,8 @@ interface TokenPayload {
 
 export default defineEventHandler(async (event) => {
   const code = event.context.params?.code
-  if (!code) {
-    return {
-      status: 400,
-      body: {
-        message: 'code is required',
-      },
-    }
-  }
+  if (!code)
+    return getErrorResponse(StatusCode.BAD_REQUEST, 'code is required')
 
   const config = useRuntimeConfig()
 
@@ -61,7 +57,8 @@ export default defineEventHandler(async (event) => {
   const user = await getUser(oauthId)
   if (!user) {
     const name = tokenPayload.nickname
-    return await createUser(oauthId, name)
+    const result = await createUser(oauthId, name)
+    return getCreatedResponse(result)
   }
-  return user
+  return getSingleSuccessResponse(user)
 })

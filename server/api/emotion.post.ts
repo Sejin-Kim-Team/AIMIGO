@@ -1,4 +1,5 @@
 import { $fetch } from 'ofetch'
+import { getSingleSuccessResponse } from '~/server/utils/CommonResult'
 
 interface Body {
   message: string
@@ -34,5 +35,5 @@ export default defineEventHandler(async (event) => {
       content: message,
     },
   })
-  return document
+  return getSingleSuccessResponse(document)
 })

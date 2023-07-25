@@ -1,4 +1,6 @@
 import { updateAimigoName } from '~/server/data/aimigos'
+import { StatusCode } from '~/server/types/types'
+import { getErrorResponse, getSingleSuccessResponse } from '~/server/utils/CommonResult'
 
 interface Body {
   name: string
@@ -6,15 +8,14 @@ interface Body {
 
 export default defineEventHandler(async (event) => {
   const id = event.context.params?.id
-  if (!id) {
-    return {
-      status: 400,
-      body: {
-        message: 'id is required',
-      },
-    }
-  }
+  if (!id)
+    return getErrorResponse(StatusCode.BAD_REQUEST, 'id is required')
+
   const body = await readBody<Body>(event)
 
-  return await updateAimigoName(Number.parseInt(id), body.name)
+  const result = await updateAimigoName(Number.parseInt(id), body.name)
+  if (result)
+    return getSingleSuccessResponse(result)
+
+  return getErrorResponse(StatusCode.NOT_FOUND)
 })

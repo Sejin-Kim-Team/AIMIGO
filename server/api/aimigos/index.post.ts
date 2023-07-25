@@ -1,4 +1,5 @@
 import { createAimigo } from '~/server/data/aimigos'
+import { getCreatedResponse } from '~/server/utils/CommonResult'
 
 interface Body {
   userId: string
@@ -8,5 +9,6 @@ interface Body {
 
 export default defineEventHandler(async (event) => {
   const { userId, name, mbti } = await readBody<Body>(event)
-  return await createAimigo(userId, name, mbti)
+  const result = await createAimigo(userId, name, mbti)
+  return getCreatedResponse(result)
 })

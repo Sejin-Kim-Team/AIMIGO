@@ -15,17 +15,22 @@
     "@types/node": "^18.17.0",
     "eslint": "^8.45.0",
     "nuxt": "^3.6.5",
+    "openai": "^3.3.0",
+    "prisma": "^5.0.0",
     "sass": "^1.64.1",
-    "typescript": "^5.1.6",
-    "openai": "^3.3.0"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@pinia/nuxt": "^0.4.11",
+    "@prisma/client": "^5.0.0",
     "@tailwindcss/typography": "^0.5.9",
     "@vueuse/nuxt": "^10.2.1",
     "daisyui": "^3.3.1",
     "nuxt-icon": "^0.4.2",
     "nuxt-snackbar": "^1.0.3"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

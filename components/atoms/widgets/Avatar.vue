@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, toRefs, watchEffect } from 'vue'
 
-import Background from './widgets/Background.vue'
+import Background from '~/components/atoms/widgets/Background.vue'
 import { widgetData } from '@/utils/dynamic-data'
 import type { AvatarOption } from '~/types/widget.types'
 import { WidgetType, WrapperShape } from '~/enums/widget.enums'
@@ -17,7 +17,6 @@ interface VueColorAvatarProps {
 }
 
 const props = withDefaults(defineProps<VueColorAvatarProps>(), {
-  option: () => getRandomAvatarOption(),
   size: 280,
 })
 
@@ -89,7 +88,7 @@ watchEffect(async () => {
       width="${avatarSize.value}"
       height="${avatarSize.value}"
       viewBox="0 0 ${avatarSize.value / 0.7} ${avatarSize.value / 0.7}"
-      preserveAspectRatio="xMidYMax meet"
+      preserveAspectRatio="xMidYMax meet키"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -11,6 +11,7 @@ import type {
 } from '~/enums/widget.enums'
 
 export const NONE = 'none'
+export type None = typeof NONE
 
 export type WidgetShape =
   | FaceShape

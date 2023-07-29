@@ -5,9 +5,9 @@ interface Body {
   message: string
 }
 
-interface SentimentResponse {
+export interface SentimentResponse {
   document: {
-    sentiment: string
+    sentiment: 'netural' | 'positive' | 'negative'
     confidence: {
       negative: number
       positive: number

@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@nuxtjs/tailwindcss':
     specifier: ^6.8.0
@@ -22,9 +26,9 @@ dependencies:
   nuxt-snackbar:
     specifier: ^1.0.3
     version: 1.0.3(vite@4.4.6)(vue@3.3.4)(vuetify@3.3.9)
-  openai:
-    specifier: ^3.3.0
-    version: 3.3.0
+  vue-writer:
+    specifier: ^1.2.0
+    version: 1.2.0(vue@3.3.4)
 
 devDependencies:
   '@antfu/eslint-config':
@@ -42,6 +46,9 @@ devDependencies:
   nuxt:
     specifier: ^3.6.5
     version: 3.6.5(@types/node@18.17.0)(eslint@8.45.0)(sass@1.64.1)(typescript@5.1.6)
+  openai:
+    specifier: ^3.3.0
+    version: 3.3.0
   sass:
     specifier: ^1.64.1
     version: 1.64.1
@@ -2432,6 +2439,7 @@ packages:
 
   /asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+    dev: true
 
   /at-least-node@1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
@@ -2464,7 +2472,7 @@ packages:
       follow-redirects: 1.15.2
     transitivePeerDependencies:
       - debug
-    dev: false
+    dev: true
 
   /axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
@@ -2849,6 +2857,7 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
+    dev: true
 
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
@@ -3246,6 +3255,7 @@ packages:
   /delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
+    dev: true
 
   /delegates@1.0.0:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
@@ -4082,6 +4092,7 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+    dev: true
 
   /formdata-polyfill@4.0.10:
     resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
@@ -4545,6 +4556,7 @@ packages:
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       safer-buffer: 2.1.2
     dev: true
@@ -5957,7 +5969,7 @@ packages:
       form-data: 4.0.0
     transitivePeerDependencies:
       - debug
-    dev: false
+    dev: true
 
   /openapi-typescript@6.3.7:
     resolution: {integrity: sha512-hZKa43Ii/N8tbz1fc0cyyyWBEY4CARXeEmmUwI7D5Z+pfwQz1oei94IRJH3D/ZhGTHn74ETXZWmRO5AJI0cKuA==}
@@ -6958,6 +6970,7 @@ packages:
 
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -8142,6 +8155,15 @@ packages:
       '@vue/devtools-api': 6.5.0
       vue: 3.3.4
 
+  /vue-writer@1.2.0(vue@3.3.4):
+    resolution: {integrity: sha512-EtunS6F12cyhXkKgIKDQxr6QEJpSmj4rUSqE149XZN5vbPQuX7PIbWovA1oPvGYUxrlq5HHobdZAzOzSeNAG7g==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.0.5
+    dependencies:
+      vue: 3.3.4
+    dev: false
+
   /vue3-icon@2.1.0:
     resolution: {integrity: sha512-cnFiGAEwzp/KQKody2Yj8cBDP4Kez0AUp5mDnp052FA1fECl8a9uYUKLaeRdH0JakmZ7Jfp3tdHbpBEWF9sgBA==}
     dev: false
@@ -8431,7 +8453,3 @@ packages:
       archiver-utils: 2.1.0
       compress-commons: 4.1.1
       readable-stream: 3.6.2
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

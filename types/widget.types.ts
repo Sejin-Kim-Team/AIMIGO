@@ -26,7 +26,7 @@ export type WidgetShape =
   | GlassesShape
   | ClothesShape
 
-interface Widget<Shape> {
+export interface Widget<Shape> {
   shape: Shape | None
   zIndex?: number
   fillColor?: string

@@ -3,7 +3,7 @@ import Avator01 from '@/assets/images/avatar-01.png'
 import KChatWrapper from '~/components/molecules/Chat/KChatWrapper.vue'
 import KInput from '~/components/atoms/KInput.vue'
 import KButton from '~/components/atoms/KButton.vue'
-import { CHAT_MESSAGE_SENDING, SEND_MESSAGE } from '~/constants/icon.constants'
+import { CHAT_MESSAGE_SENDING, SEND_MESSAGE, SETTING } from '~/constants/icon.constants'
 import KChat from '~/components/molecules/Chat/KChat.vue'
 
 definePageMeta({
@@ -74,6 +74,11 @@ async function requestMessage(message: string) {
       <!-- Avatar Layer -->
       <div class="md:col-span-2 col-span-6">
         <div class="card w-full bg-base-200 shadow-xl">
+          <div class="flex justify-end">
+            <KButton @click="navigateTo('/mypage/mbti-characters')">
+              <Icon :name="SETTING" />
+            </KButton>
+          </div>
           <figure class="px-10 pt-10">
             <img :src="Avator01" alt="avatar" class="rounded-xl">
           </figure>

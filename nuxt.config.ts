@@ -42,6 +42,7 @@ export default defineNuxtConfig({
       sentimentClientId: process.env.NUXT_API_SENTIMENT_API_CLIENT_ID ?? '',
       sentimentClientSecret: process.env.NUXT_API_SENTIMENT_API_CLIENT_SECRET ?? '',
       sentimentUrl: process.env.NUXT_API_SENTIMENT_URL ?? '',
+      fcmKey: process.env.NUXT_API_FCM_KEY ?? '',
     },
     auth: {
       tokenUrl: process.env.NUXT_AUTH_TOKEN_URL ?? '',

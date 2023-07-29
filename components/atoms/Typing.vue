@@ -1,4 +1,8 @@
 <script setup lang="ts">
+defineOptions({
+  inheritAttrs: true,
+})
+
 const props = withDefaults(defineProps<{
   items: string[]
   eraseSpeed?: number
@@ -8,7 +12,6 @@ const props = withDefaults(defineProps<{
   start?: number
   caret?: string
   iterations?: number
-  erase?: boolean
 }>(), {
   eraseSpeed: 100,
   typeSpeed: 200,
@@ -17,7 +20,6 @@ const props = withDefaults(defineProps<{
   start: 0,
   caret: 'cursor',
   iterations: 0,
-  erase: false,
 })
 
 const emits = defineEmits<{
@@ -33,6 +35,15 @@ const data = reactive({
   charIndex: 0,
 })
 
+let timer = 0
+
+function clearTimer() {
+  if (timer) {
+    clearTimeout(timer)
+    timer = 0
+  }
+}
+
 function typeWriter() {
   let loop = 0
   if (data.charIndex < props.items[data.currentIndex].length) {
@@ -42,7 +53,9 @@ function typeWriter() {
     data.typeValue += props.items[data.currentIndex].charAt(data.charIndex)
     data.charIndex += 1
     emits('typing', data.typeValue)
-    setTimeout(typeWriter, props.typeSpeed)
+
+    clearTimer()
+    timer = window.setTimeout(typeWriter, props.typeSpeed)
   }
   else {
     data.count += 1
@@ -56,26 +69,6 @@ function typeWriter() {
     }
 
     data.typeStatus = false
-
-    if (props.erase)
-      setTimeout(eraser, props.delay)
-  }
-}
-
-function eraser() {
-  if (data.charIndex > 0) {
-    if (!data.typeStatus)
-      data.typeStatus = true
-    data.typeValue = props.items[data.currentIndex].substring(0, data.charIndex - 1)
-    data.charIndex -= 1
-    setTimeout(eraser, props.eraseSpeed)
-  }
-  else {
-    data.typeStatus = false
-    data.currentIndex += 1
-    if (data.currentIndex >= props.items.length)
-      data.currentIndex = 0
-    setTimeout(typeWriter, props.typeSpeed + props.intervals)
   }
 }
 
@@ -83,8 +76,17 @@ function onTyped(typedString: string) {
   emits('typed', typedString)
 }
 
-onBeforeMount(() => {
+watch(() => props.items, () => {
+  data.typeValue = ''
+  data.count = 0
+  data.typeStatus = false
+  data.currentIndex = props.start
+  data.charIndex = 0
+
+  clearTimer()
   setTimeout(typeWriter, props.start)
+}, {
+  immediate: true,
 })
 </script>
 

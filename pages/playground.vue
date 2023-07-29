@@ -1,38 +1,31 @@
 <script setup lang="ts">
 import { PlaygroundAvatar } from '~/constants/charactor.constants'
 import type { AvatarOption } from '~/types/widget.types'
-import { MouthShape, WidgetType } from '~/enums/widget.enums'
-import Avatar from '~/components/atoms/widgets/Avatar.vue'
 import Typing from '~/components/atoms/Typing.vue'
+import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 
 const charactor = ref<AvatarOption>(PlaygroundAvatar)
 
-function updateAvatar(option: AvatarOption, shape: MouthShape) {
-  charactor.value = {
-    ...option,
-    widgets: {
-      ...option.widgets,
-      [WidgetType.Mouth]: {
-        ...option.widgets[WidgetType.Mouth],
-        shape,
-      },
-    },
-  }
-}
-
+const emotion = ref<'Normal' | 'Positive' | 'Negative'>('Normal')
 const count = ref(0)
+const texts = ref([
+  'Hello, my name kim sejin. nice to meet you.',
+])
 
-watch(count, (v) => {
-  updateAvatar(toRaw(charactor.value), v % 3 === 0 ? MouthShape.Smirk : MouthShape.Laughing)
-})
-
-function handleTyping(typedString: string) {
+function handleTyping() {
   count.value += 1
 }
 
-function handledTyped(typedString: string) {
+function handledTyped() {
   count.value = 0
   console.count('fucking!')
+}
+
+async function handleRestart() {
+  count.value = 0
+  texts.value = []
+  await nextTick()
+  texts.value = ['Hello, my name kim sejin. nice to meet you.']
 }
 </script>
 
@@ -42,13 +35,29 @@ function handledTyped(typedString: string) {
       Hello Playground
     </h1>
 
-    <Avatar :option="charactor" />
+    <div class="mt-4 flex gap-4">
+      <div class="join">
+        <input v-model="emotion" class="join-item btn" type="radio" name="options" aria-label="Normal" value="Normal">
+        <input v-model="emotion" class="join-item btn" type="radio" name="options" aria-label="Positive" value="Positive">
+        <input v-model="emotion" class="join-item btn" type="radio" name="options" aria-label="Negative" value="Negative">
+      </div>
 
-    <div>
+      <button type="button" class="btn btn-warning" @click="handleRestart">
+        Restart
+      </button>
+    </div>
+
+    <KAvatar
+      class="mt-4"
+      :avatar="charactor"
+      :current-index="count"
+      :emotion="emotion"
+    />
+
+    <div class="mt-4">
       <Typing
-        :items="[
-          'Hello, my name kim sejin. nice to meet you.',
-        ]"
+        class="badge badge-primary"
+        :items="texts"
         :type-speed="66"
         @typing="handleTyping"
         @typed="handledTyped"

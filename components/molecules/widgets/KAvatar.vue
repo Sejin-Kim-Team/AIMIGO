@@ -33,8 +33,6 @@ const currentAvatar = computed(() => {
   else if (props.emotion === 'Negative')
     emotionalFace = NegativeEmotionalAvatarStates[itemIndex]
 
-  console.log('fucking', props.currentIndex, emotionalFace)
-
   const shapes = {
     mouth: emotionalFace.widgets.mouth,
     eyes: emotionalFace.widgets.eyes,

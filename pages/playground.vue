@@ -18,7 +18,6 @@ function handleTyping() {
 
 function handledTyped() {
   count.value = 0
-  console.count('fucking!')
 }
 
 async function handleRestart() {

@@ -4,26 +4,17 @@ import { prisma } from '~/server/utils/prisma'
 export async function getUsers(): Promise<User[]> {
   return await prisma.user.findMany({
     where: {},
-    include: {
-      aimigos: true,
-    },
   })
 }
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   return await prisma.user.findUnique({
     where: { email },
-    include: {
-      aimigos: true,
-    },
   })
 }
 export async function getUser(id: string): Promise<User | null> {
   return await prisma.user.findUnique({
     where: { id },
-    include: {
-      aimigos: true,
-    },
   })
 }
 

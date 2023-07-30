@@ -57,6 +57,6 @@ export function getErrorResponse(status: StatusCode, message: string | null): Co
 
   return {
     status,
-    resultMessage,
+    message: resultMessage,
   }
 }

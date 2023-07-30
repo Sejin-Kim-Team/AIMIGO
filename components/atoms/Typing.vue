@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<{
   start?: number
   caret?: string
   iterations?: number
+  once?: boolean
 }>(), {
   eraseSpeed: 100,
   typeSpeed: 200,
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<{
   start: 0,
   caret: 'cursor',
   iterations: 0,
+  once: true,
 })
 
 const emits = defineEmits<{

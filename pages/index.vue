@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import Avator01 from '@/assets/images/avatar-01.png'
 import KChatWrapper from '~/components/molecules/Chat/KChatWrapper.vue'
 import KInput from '~/components/atoms/KInput.vue'
 import KButton from '~/components/atoms/KButton.vue'
 import { CHAT_MESSAGE_SENDING, SEND_MESSAGE, SETTING } from '~/constants/icon.constants'
 import KChat from '~/components/molecules/Chat/KChat.vue'
+import Typing from '~/components/atoms/Typing.vue'
+import type { AvatarOption } from '~/types/widget.types'
+import { PlaygroundAvatar } from '~/constants/charactor.constants'
+import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 
 definePageMeta({
   name: 'Home',
@@ -22,6 +25,10 @@ const { status, getSession } = useAuth()
 
 const loading = ref<boolean>(false)
 const message = ref<string>('')
+const currentIndex = ref<number>(0)
+const character = ref<AvatarOption>(PlaygroundAvatar)
+const emotion = ref<'Normal' | 'Positive' | 'Negative'>('Normal')
+
 const chats = ref<Chat[]>([])
 const chatRef = ref<HTMLDivElement>()
 const inputRef = ref<HTMLInputElement>()
@@ -48,10 +55,30 @@ async function handleSubmit() {
   inputFocused.value = true
 }
 
+function handleTyping() {
+  currentIndex.value += 1
+}
+
+function handleTyped() {
+  currentIndex.value = 0
+}
+
 async function requestMessage(message: string) {
   const { data } = await useFetch<{
     message: string
+    body: string
   }>('/api/chat', {
+    method: 'post',
+    body: {
+      message,
+    },
+  })
+
+  const { data: emotionalData } = await useFetch<{
+    body: {
+      sentiment: 'positive' | 'negative' | 'netural'
+    }
+  }>('/api/emotion', {
     method: 'post',
     body: {
       message,
@@ -64,8 +91,17 @@ async function requestMessage(message: string) {
   const chat: Chat = {
     sender: 'Sejin Kim',
     time: new Date().toISOString(),
-    message: data.value.message,
+    message: data.value.body,
   }
+
+  const sentiment = emotionalData.value!.body.sentiment
+
+  if (sentiment === 'netural')
+    emotion.value = 'Normal'
+  else if (sentiment === 'positive')
+    emotion.value = 'Positive'
+  else if (sentiment === 'negative')
+    emotion.value = 'Negative'
 
   chats.value.push(chat)
 }
@@ -85,7 +121,11 @@ const sessionUserInfo = computed(() => user)
             </KButton>
           </div>
           <figure class="px-10 pt-10">
-            <img :src="Avator01" alt="avatar" class="rounded-xl">
+            <KAvatar
+              :avatar="character"
+              :current-index="currentIndex"
+              :emotion="emotion"
+            />
           </figure>
           <div class="card-body items-center text-center">
             <h2 class="card-title">
@@ -104,7 +144,17 @@ const sessionUserInfo = computed(() => user)
               :time="chat.time"
               :end="chat.sender === senderId"
             >
-              {{ chat.message }}
+              <template v-if="index === chats.length - 1 && chat.sender !== senderId">
+                <Typing
+                  :items="[chat.message]"
+                  :type-speed="60"
+                  @typing="handleTyping"
+                  @typed="handleTyped"
+                />
+              </template>
+              <template v-else>
+                {{ chat.message }}
+              </template>
             </KChat>
           </template>
         </KChatWrapper>

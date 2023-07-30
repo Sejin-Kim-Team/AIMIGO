@@ -4,7 +4,7 @@ import type { AvatarOption } from '~/types/widget.types'
 import Typing from '~/components/atoms/Typing.vue'
 import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 
-const charactor = ref<AvatarOption>(PlaygroundAvatar)
+const character = ref<AvatarOption>(PlaygroundAvatar)
 
 const emotion = ref<'Normal' | 'Positive' | 'Negative'>('Normal')
 const count = ref(0)
@@ -48,7 +48,7 @@ async function handleRestart() {
 
     <KAvatar
       class="mt-4"
-      :avatar="charactor"
+      :avatar="character"
       :current-index="count"
       :emotion="emotion"
     />

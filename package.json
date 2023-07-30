@@ -27,6 +27,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "@vueuse/nuxt": "^10.2.1",
     "daisyui": "^3.3.1",
+    "langchain": "^0.0.119",
     "nuxt-icon": "^0.4.2",
     "nuxt-snackbar": "^1.0.3"
   },

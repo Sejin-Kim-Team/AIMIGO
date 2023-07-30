@@ -1,5 +1,6 @@
 import { cert, initializeApp } from 'firebase-admin/app'
-import { getMessaging } from 'firebase-admin/lib/messaging'
+import { getMessaging } from 'firebase-admin/messaging'
+import firbaseJson from '~/firebase-admin.json'
 
 const config = useRuntimeConfig()
 
@@ -18,7 +19,7 @@ const firebaseConfig = {
 }
 
 const adminApp = initializeApp({
-  credential: cert(JSON.stringify(firebaseConfig)),
+  credential: cert(firbaseJson),
 })
 
 export const messaging = getMessaging(adminApp)

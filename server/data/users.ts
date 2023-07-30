@@ -37,10 +37,10 @@ export async function getUsersWherePushEnabled(yesterday: Date, time: number): P
   })
 }
 
-export async function createUser(oauthId: string, name: string): Promise<User> {
+export async function createUser(email: string, name: string): Promise<User> {
   return await prisma.user.create({
     data: {
-      oauthId,
+      email,
       name,
       remainedHeart: 5,
     },

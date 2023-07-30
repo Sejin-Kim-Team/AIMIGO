@@ -1,18 +1,13 @@
+import { getServerSession } from '#auth'
 import { getAimigos } from '~/server/data/aimigos'
-import { StatusCode } from '~/server/types/types'
-import { getErrorResponse, getListSuccessResponse } from '~/server/utils/CommonResult'
+import { getUserByEmail } from '~/server/data/users'
+import { getListSuccessResponse } from '~/server/utils/CommonResult'
 
 export default defineEventHandler(async (event) => {
-  const queryParams = event.node.req.url?.split('?')[1].split('&').map((param) => {
-    const [key, value] = param.split('=')
-    return { key, value }
-  })
+  const session = await getServerSession(event)
+  const email = session.user?.email ?? ''
 
-  const userId = queryParams?.find(param => param.key === 'userId')?.value
-
-  if (!userId)
-    return getErrorResponse(StatusCode.BAD_REQUEST, 'userId is required')
-
-  const aimigos = await getAimigos(userId)
+  const user = await getUserByEmail(email)
+  const aimigos = await getAimigos(user?.id)
   return getListSuccessResponse(aimigos)
 })

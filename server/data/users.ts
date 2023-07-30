@@ -10,6 +10,14 @@ export async function getUsers(): Promise<User[]> {
   })
 }
 
+export async function getUserByEmail(email: string): Promise<User | null> {
+  return await prisma.user.findUnique({
+    where: { email },
+    include: {
+      aimigos: true,
+    },
+  })
+}
 export async function getUser(id: string): Promise<User | null> {
   return await prisma.user.findUnique({
     where: { id },

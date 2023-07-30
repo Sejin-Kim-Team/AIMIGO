@@ -3,9 +3,21 @@ export interface User {
   oauthId: string
   name: string
   remainedHeart: number
+  pushEnabled: boolean
+  pushToken: string | null
+  pushPermitStartTime: number | null
+  pushPermitEndTime: number | null
+  lastPushTime: Date | null
   createdAt: Date
   updatedAt: Date
   aimigos: Aimigo[]
+}
+
+export interface UserPushUpdateRequest {
+  pushEnabled: boolean
+  pushToken: string | null
+  pushPermitStartTime: number | null
+  pushPermitEndTime: number | null
 }
 
 export interface Aimigo {

@@ -24,3 +24,4 @@ logs
 
 prisma/migrations
 *.http
+firebase-admin.json

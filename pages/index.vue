@@ -9,6 +9,7 @@ import KChat from '~/components/molecules/Chat/KChat.vue'
 definePageMeta({
   name: 'Home',
   layout: 'default',
+  middleware: ['auth'],
 })
 
 interface Chat {
@@ -16,6 +17,8 @@ interface Chat {
   time: string
   message: string
 }
+
+const { status, getSession } = useAuth()
 
 const loading = ref<boolean>(false)
 const message = ref<string>('')
@@ -66,6 +69,8 @@ async function requestMessage(message: string) {
 
   chats.value.push(chat)
 }
+const { user } = await getSession()
+const sessionUserInfo = computed(() => user)
 </script>
 
 <template>

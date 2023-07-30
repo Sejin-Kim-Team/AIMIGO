@@ -13,12 +13,12 @@ export async function getAimigo(id: number): Promise<Aimigo | null> {
   })
 }
 
-export async function createAimigo(id: string, name: string, mbti: string): Promise<Aimigo> {
+export async function createAimigo(email: string, name: string, mbti: string): Promise<Aimigo> {
   return await prisma.aimigo.create({
     data: {
       name,
       mbti,
-      user: { connect: { id } },
+      user: { connect: { email } },
     },
   })
 }

@@ -38,6 +38,5 @@
     "nuxt-snackbar": "^1.0.3"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
   }
 }

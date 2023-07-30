@@ -23,6 +23,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "langchain": "^0.0.119",
     "@auth/prisma-adapter": "^1.0.1",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@pinia/nuxt": "^0.4.11",

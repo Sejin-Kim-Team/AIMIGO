@@ -8,6 +8,6 @@ export default defineEventHandler(async (event) => {
   const email = session.user?.email ?? ''
 
   const user = await getUserByEmail(email)
-  const aimigos = await getAimigos(userId)
+  const aimigos = await getAimigos(user?.id)
   return getListSuccessResponse(aimigos)
 })

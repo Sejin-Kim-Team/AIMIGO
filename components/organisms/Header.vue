@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Avatar01 from '~/assets/images/avatar-01.png'
 import Avatar02 from '~/assets/images/avatar-02.png'
+import KButton from '~/components/atoms/KButton.vue'
 import { useElementHover } from '#imports'
 
+const { status, signOut } = useAuth()
 const iconRef = ref<HTMLElement>()
 const iconIsHovered = useElementHover(iconRef)
 
@@ -21,7 +23,11 @@ const iconSrc = computed(() => iconIsHovered.value ? Avatar02 : Avatar01)
       <div class="navbar-center">
         <a class="btn btn-ghost normal-case text-xl text-base-content">AIMIGO!</a>
       </div>
-      <div class="navbar-end" />
+      <div class="navbar-end">
+        <KButton v-if="status === 'authenticated'" @click="signOut({ callbackUrl: '/login' })">
+          로그아웃
+        </KButton>
+      </div>
     </nav>
   </header>
 </template>

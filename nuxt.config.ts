@@ -4,11 +4,6 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'AIMIGO!',
-      script: [
-        {
-          src: 'https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js',
-        },
-      ],
     },
   },
   modules: [
@@ -17,6 +12,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-icon',
     'nuxt-snackbar',
+    'nuxt-scheduler',
+    '@sidebase/nuxt-auth',
   ],
   css: [
     '~/assets/styles/main.scss',
@@ -43,9 +40,16 @@ export default defineNuxtConfig({
       sentimentUrl: process.env.NUXT_API_SENTIMENT_URL ?? '',
     },
     auth: {
-      tokenUrl: process.env.NUXT_AUTH_TOKEN_URL ?? '',
-      redirectUrl: process.env.NUXT_AUTH_REDIRECT_URL ?? '',
       clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
+      clientSecret: process.env.NUXT_AUTH_CLIENT_SECRET ?? '',
+    },
+    fcm: {
+      projectId: process.env.NUXT_FCM_PROJECT_ID ?? '',
+      privateKeyId: process.env.NUXT_FCM_PRIVATE_KEY_ID ?? '',
+      privateKey: process.env.NUXT_FCM_PRIVATE_KEY ?? '',
+      clientEmail: process.env.NUXT_FCM_CLIENT_EMAIL ?? '',
+      clientId: process.env.NUXT_FCM_CLIENT_ID ?? '',
+      certUrl: process.env.NUXT_FCM_CERT_URL ?? '',
     },
   },
   vite: {

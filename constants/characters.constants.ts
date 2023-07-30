@@ -64,4 +64,11 @@ export const CharacterImages = {
   ],
 }
 
+export const CharacterJsons = {
+  enfj: [
+    'enfj-avatar-01.json',
+    'enfj-avatar-02.json',
+  ],
+}
+
 export const IMAGE_DIRECTORY = '../assets/images/mbti/'

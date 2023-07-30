@@ -1,0 +1,45 @@
+{
+  "gender": "female",
+  "wrapperShape": "squircle",
+  "background": {
+    "color": "#F48150"
+  },
+  "widgets": {
+    "face": {
+      "shape": "base",
+      "fillColor": "#F9C9B6"
+    },
+    "tops": {
+      "shape": "wave",
+      "fillColor": "#C09FFF"
+    },
+    "ear": {
+      "shape": "attached"
+    },
+    "earrings": {
+      "shape": "none"
+    },
+    "eyebrows": {
+      "shape": "up"
+    },
+    "eyes": {
+      "shape": "round"
+    },
+    "nose": {
+      "shape": "round"
+    },
+    "glasses": {
+      "shape": "none"
+    },
+    "mouth": {
+      "shape": "surprised"
+    },
+    "beard": {
+      "shape": "none"
+    },
+    "clothes": {
+      "shape": "crew",
+      "fillColor": "#C09FFF"
+    }
+  }
+}

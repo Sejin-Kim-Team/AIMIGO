@@ -1,0 +1,45 @@
+{
+  "gender": "male",
+  "wrapperShape": "squircle",
+  "background": {
+    "color": "#FD6F5D"
+  },
+  "widgets": {
+    "face": {
+      "shape": "base",
+      "fillColor": "#F8D9CE"
+    },
+    "tops": {
+      "shape": "beanie",
+      "fillColor": "#FFEDEF"
+    },
+    "ear": {
+      "shape": "detached"
+    },
+    "earrings": {
+      "shape": "none"
+    },
+    "eyebrows": {
+      "shape": "down"
+    },
+    "eyes": {
+      "shape": "eyeshadow"
+    },
+    "nose": {
+      "shape": "curve"
+    },
+    "glasses": {
+      "shape": "none"
+    },
+    "mouth": {
+      "shape": "smile"
+    },
+    "beard": {
+      "shape": "none"
+    },
+    "clothes": {
+      "shape": "open",
+      "fillColor": "#C09FFF"
+    }
+  }
+}

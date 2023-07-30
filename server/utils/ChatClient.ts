@@ -5,7 +5,10 @@ import { LLMChain, PromptTemplate } from 'langchain'
 
 interface ChatParams {
   userId: string
+  userName: string
   message: string
+  aimigoName: string
+  mbti: string
 }
 
 export class ChatClient {

@@ -11,5 +11,5 @@ export default defineEventHandler(async (event) => {
   if (result)
     return getSingleSuccessResponse(result)
   else
-    return getErrorResponse(StatusCode.NOT_FOUND)
+    return getErrorResponse(StatusCode.NOT_FOUND, null)
 })

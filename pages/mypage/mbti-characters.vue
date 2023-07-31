@@ -20,6 +20,7 @@ import ISFP_JSON from '~/assets/json/isfp-avatar-01.json'
 import ISTJ_JSON from '~/assets/json/istj-avatar-01.json'
 import ISTP_JSON from '~/assets/json/istp-avatar-01.json'
 import { MBTI_LIST } from '~/constants/characters.constants'
+import KButton from '~/components/atoms/KButton.vue'
 
 const focusedCharacter = ref(null)
 
@@ -42,8 +43,14 @@ const mbtiJsons = [
   ISTP_JSON,
 ]
 
-function onClickCharacter(mbti: any) {
-  focusedCharacter.value = mbti
+function onClickCharacter(index: any) {
+  focusedCharacter.value = index
+}
+
+async function onClickSubmit(mbti: any) {
+  // TODO: mbti 저장 -> session storage
+
+  await navigateTo(`/mypage/my-aimigo?mbti=${mbti}`)
 }
 </script>
 
@@ -60,6 +67,11 @@ function onClickCharacter(mbti: any) {
         </div>
       </div>
     </div>
+  </div>
+  <div v-if="focusedCharacter" class="flex justify-end">
+    <KButton @click="onClickSubmit(MBTI_LIST[focusedCharacter])">
+      다음
+    </KButton>
   </div>
 </template>
 

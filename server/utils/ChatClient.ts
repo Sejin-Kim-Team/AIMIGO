@@ -2,6 +2,8 @@ import type { BaseChatMemory } from 'langchain/dist/memory/chat_memory'
 import { ConversationSummaryMemory } from 'langchain/memory'
 import { OpenAI } from 'langchain/llms/openai'
 import { LLMChain, PromptTemplate } from 'langchain'
+import { MbtiTemplates } from '~/constants/mbti.constants'
+import type { MBTI } from '~/types/chat.type'
 
 interface ChatParams {
   userId: string
@@ -15,6 +17,7 @@ export class ChatClient {
   private static client: ChatClient
   private memory: Map<string, BaseChatMemory> = new Map()
   private apiKey: string = ''
+  private descriptions: string[] = []
 
   private constructor() {
     const config = useRuntimeConfig()
@@ -35,6 +38,11 @@ export class ChatClient {
     }))
   }
 
+  public setMBTI(mbti: MBTI): ChatClient {
+    this.descriptions = MbtiTemplates[mbti].descriptions
+    return this
+  }
+
   public async chat(params: ChatParams) {
     if (!params.userId)
       throw new Error('userId is required')
@@ -46,7 +54,11 @@ export class ChatClient {
 
     const prompt
       = PromptTemplate.fromTemplate(`The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.
-      
+  Settings:
+  AI: ${params.aimigoName}
+  Human: ${params.userName}
+  MBTI: ${params.mbti}
+  Rules: ${this.descriptions.map((x, index) => `- ${index + 1}: ${x}`).join('\n')}
   Current conversation:
   {chat_history}
   Human: {input}
@@ -55,6 +67,7 @@ export class ChatClient {
     const memory = this.memory.get(params.userId)!
 
     const chain = new LLMChain({ llm: model, prompt, memory })
+
     const { text } = await chain.call({ input: params.message })
 
     console.log({ text, memory: await memory.loadMemoryVariables({}) })

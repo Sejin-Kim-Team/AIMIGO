@@ -64,26 +64,31 @@ function handleTyped() {
 }
 
 async function requestMessage(message: string) {
-  const { data } = await useFetch<{
-    message: string
-    body: string
-  }>('/api/chat', {
-    method: 'post',
-    body: {
-      message,
-    },
-  })
-
-  const { data: emotionalData } = await useFetch<{
-    body: {
-      sentiment: 'positive' | 'negative' | 'netural'
-    }
-  }>('/api/emotion', {
-    method: 'post',
-    body: {
-      message,
-    },
-  })
+  const [_chat, _emotional] = await Promise.all([
+    useFetch<{
+      message: string
+      body: string
+    }>('/api/chat', {
+      method: 'post',
+      body: {
+        message,
+        name: 'Sejin Kim',
+        mbti: 'INFP',
+      },
+    }),
+    useFetch<{
+      body: {
+        sentiment: 'positive' | 'negative' | 'netural'
+      }
+    }>('/api/emotion', {
+      method: 'post',
+      body: {
+        message,
+      },
+    }),
+  ])
+  const data = _chat.data
+  const emotionalData = _emotional.data
 
   if (data.value === null)
     return
@@ -105,6 +110,7 @@ async function requestMessage(message: string) {
 
   chats.value.push(chat)
 }
+
 const { user } = await getSession()
 const sessionUserInfo = computed(() => user)
 

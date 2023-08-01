@@ -6,6 +6,8 @@ import { ChatClient } from '~/server/utils/ChatClient'
 
 interface Body {
   message: string
+  name: string
+  mbti: string
 }
 
 export default defineEventHandler(async (event) => {
@@ -19,25 +21,26 @@ export default defineEventHandler(async (event) => {
   if (!user)
     return getErrorResponse(StatusCode.FORBIDDEN, 'Unauthenticated')
 
-  const { remainedHeart, aimigos } = user
-  if (aimigos.length === 0)
-    return getErrorResponse(StatusCode.BAD_REQUEST, 'No aimigos')
+  const { remainedHeart } = user
+
   if (remainedHeart <= 0)
     return getErrorResponse(StatusCode.BAD_REQUEST, 'No heart')
 
-  const { name: aimigoName, mbti } = aimigos[0]
-
   const body = await readBody<Body>(event)
-  const message = body.message
   const param = {
     userId: email,
-    message,
+    message: body.message,
     userName: user.name,
-    aimigoName,
-    mbti,
+    aimigoName: body.name,
+    mbti: body.mbti,
   }
 
-  const text = await ChatClient.getInstance().chat(param)
+  console.log('fucking', param)
+
+  const text = await ChatClient
+    .getInstance()
+    .setMBTI(body.mbti as any)
+    .chat(param)
 
   await updateUserHeart(user.id, remainedHeart - 1)
 

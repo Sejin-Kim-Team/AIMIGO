@@ -32,4 +32,8 @@ const computedClass = computed(() => {
 .k-btn {
   @apply btn;
 }
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-focus;
+}
 </style>

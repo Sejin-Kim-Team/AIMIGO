@@ -79,6 +79,12 @@ export async function updateUserPushTime(id: string, pushUpdateRequest: UserPush
   })
 }
 
+export async function updateUserLastPushTime(id: string, lastPushTime: Date): Promise<User> {
+  return await prisma.user.update({
+    where: { id },
+    data: { lastPushTime },
+  })
+}
 export async function deleteUser(id: string): Promise<User> {
   return await prisma.user.delete({
     where: { id },

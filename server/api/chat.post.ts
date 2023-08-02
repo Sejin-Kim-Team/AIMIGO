@@ -35,8 +35,6 @@ export default defineEventHandler(async (event) => {
     mbti: body.mbti,
   }
 
-  console.log('fucking', param)
-
   const text = await ChatClient
     .getInstance()
     .setMBTI(body.mbti as any)

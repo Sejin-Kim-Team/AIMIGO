@@ -3,11 +3,15 @@ import Avatar01 from '~/assets/images/avatar-01.png'
 import Avatar02 from '~/assets/images/avatar-02.png'
 import { useElementHover } from '#imports'
 import { HEART_CHARGING, HEART_FULL, HEART_ZERO } from '~/constants/icon.constants'
+import type { User } from '~/server/types/types'
+import { StatusCode } from '~/server/types/types'
 
-const { status, signOut } = useAuth()
+const { status, signOut, getSession } = useAuth()
 const iconRef = ref<HTMLElement>()
 const iconIsHovered = useElementHover(iconRef)
 const iconSrc = computed(() => iconIsHovered.value ? Avatar02 : Avatar01)
+
+const thisUser = ref<User | null>(null)
 const heart = ref<number>(5)
 
 const computedHeart = computed(() => {
@@ -17,6 +21,29 @@ const computedHeart = computed(() => {
     return HEART_ZERO
   else return HEART_CHARGING
 })
+
+async function getUser() {
+  const session = await getSession()
+  if (!session)
+    return getErrorResponse(StatusCode.FORBIDDEN, 'Unauthenticated')
+
+  const email = session.user?.email ?? ''
+  const { data } = await useFetch('/api/users', {
+    method: 'GET',
+    params: { email },
+  })
+
+  thisUser.value = data.value?.body ?? null
+
+  if (!thisUser.value)
+    return getErrorResponse(StatusCode.NOT_FOUND, 'Unauthenticated')
+
+  heart.value = thisUser.value.remainedHeart ?? 0
+  if (heart.value > 5)
+    heart.value = 5
+  // TODO: 실제로 5개로 update 로직 필요.
+}
+getUser()
 </script>
 
 <template>
@@ -27,12 +54,16 @@ const computedHeart = computed(() => {
           <label tabindex="0" class="btn btn-ghost m-1">
             <img :src="iconSrc" alt="avatar" class="w-8 h-8">
           </label>
-          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-            <li v-if="status === 'authenticated'" @click="navigateTo('/mypage')">
+          <ul v-if="status === 'authenticated' && thisUser" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+            <li class="p-4 text-lg">
+              반가워요, {{ thisUser.name }}!
+            </li>
+
+            <li @click="navigateTo('/mypage')">
               <a>마이페이지</a>
             </li>
 
-            <li v-if="status === 'authenticated'" @click="signOut({ callbackUrl: '/login' })">
+            <li @click="signOut({ callbackUrl: '/login' })">
               <a>로그아웃</a>
             </li>
           </ul>

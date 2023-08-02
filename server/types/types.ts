@@ -3,6 +3,8 @@ export interface User {
   oauthId: string
   name: string
   remainedHeart: number
+  aimigoName: string
+  aimigoMbti: string
   pushEnabled: boolean
   pushToken: string | null
   pushPermitStartTime: number | null

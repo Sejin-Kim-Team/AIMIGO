@@ -20,7 +20,9 @@ function startPushScheduler() {
         console.log(users.length)
         for (const user of users) {
           const token = user.pushToken
-          const sendPushRatio = user.aimigoMbti.toUpperCase().startsWith('E') ? 0.8 : 0.5
+          const mbti = user.aimigoMbti
+
+          const sendPushRatio = mbti !== null && mbti.toUpperCase().startsWith('E') ? 0.8 : 0.5
           const sendPush = (Math.random() < sendPushRatio && token !== null)
           if (sendPush) {
             // send push

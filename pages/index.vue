@@ -20,6 +20,19 @@ interface Chat {
   message: string
 }
 
+interface ChatResult {
+  text: string
+  heart: number
+  emotion: {
+    sentiment: 'netural' | 'positive' | 'negative'
+    confidence: {
+      negative: number
+      positive: number
+      neutral: number
+    }
+  }
+}
+
 const { status, getSession } = useAuth()
 
 const loading = ref<boolean>(false)
@@ -63,42 +76,32 @@ function handleTyped() {
 }
 
 async function requestMessage(message: string) {
-  const [_chat, _emotional] = await Promise.all([
-    useFetch<{
-      message: string
-      body: string
-    }>('/api/chat', {
-      method: 'post',
-      body: {
-        message,
-        name: 'Sejin Kim',
-        mbti: 'INFP',
-      },
-    }),
-    useFetch<{
-      body: {
-        sentiment: 'positive' | 'negative' | 'netural'
-      }
-    }>('/api/emotion', {
-      method: 'post',
-      body: {
-        message,
-      },
-    }),
-  ])
+  const _chat = await useFetch<{
+    message: string
+    body: ChatResult
+  }>('/api/chat', {
+    method: 'post',
+    body: {
+      message,
+      name: 'Sejin Kim',
+      mbti: 'INFP',
+    },
+  })
+
   const data = _chat.data
-  const emotionalData = _emotional.data
 
   if (data.value === null)
     return
 
+  const body = data.value.body
+
   const chat: Chat = {
     sender: 'Sejin Kim',
     time: new Date().toISOString(),
-    message: data.value.body,
+    message: body.text,
   }
 
-  const sentiment = emotionalData.value!.body.sentiment
+  const sentiment = body.emotion.sentiment
 
   if (sentiment === 'netural')
     emotion.value = 'Normal'

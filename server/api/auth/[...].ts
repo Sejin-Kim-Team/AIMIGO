@@ -3,8 +3,9 @@ import GoogleProvider from 'next-auth/providers/google'
 import { NuxtAuthHandler } from '#auth'
 
 const config = useRuntimeConfig()
-const { clientId, clientSecret } = config.auth
+const { clientId, clientSecret, secret } = config.auth
 export default NuxtAuthHandler({
+  secret,
   pages: {
     signIn: '/login',
   },

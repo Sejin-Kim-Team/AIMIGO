@@ -18,20 +18,12 @@ export async function getUser(id: string): Promise<User | null> {
   })
 }
 
-export async function getUsersWherePushEnabled(yesterday: Date, time: number): Promise<User[]> {
+export async function getUsersWherePushEnabled(time: number): Promise<User[]> {
   return await prisma.user.findMany({
     where: {
       pushEnabled: true,
       pushPermitStartTime: { gte: time },
       pushPermitEndTime: { lte: time },
-      OR: [
-        {
-          lastPushTime: null,
-        },
-        {
-          lastPushTime: { lte: yesterday },
-        },
-      ],
     },
   })
 }
@@ -41,8 +33,15 @@ export async function createUser(email: string, name: string): Promise<User> {
     data: {
       email,
       name,
-      remainedHeart: 5,
+      remainedHeart: 20,
     },
+  })
+}
+
+export async function updateUserAimigoEnergy(id: string, aimigoEnergy: number): Promise<User> {
+  return await prisma.user.update({
+    where: { id },
+    data: { aimigoEnergy },
   })
 }
 
@@ -53,13 +52,6 @@ export async function updateUserHeart(id: string, remainedHeart: number): Promis
   })
 }
 
-export async function updateUserName(id: string, name: string): Promise<User> {
-  return await prisma.user.update({
-    where: { id },
-    data: { name },
-  })
-}
-
 export async function updateAimigoInfo(id: string, aimigoName: string, aimigoMbti: string): Promise<User> {
   return await prisma.user.update({
     where: { id },
@@ -67,10 +59,11 @@ export async function updateAimigoInfo(id: string, aimigoName: string, aimigoMbt
   })
 }
 export async function updateUserPushTime(id: string, pushUpdateRequest: UserPushUpdateRequest): Promise<User> {
-  const { pushPermitStartTime, pushPermitEndTime, pushEnabled, pushToken } = pushUpdateRequest
+  const { name, pushPermitStartTime, pushPermitEndTime, pushEnabled, pushToken } = pushUpdateRequest
   return await prisma.user.update({
     where: { id },
     data: {
+      name,
       pushEnabled,
       pushPermitStartTime,
       pushPermitEndTime,
@@ -79,10 +72,13 @@ export async function updateUserPushTime(id: string, pushUpdateRequest: UserPush
   })
 }
 
-export async function updateUserLastPushTime(id: string, lastPushTime: Date): Promise<User> {
+export async function updateUserLastPushTime(id: string, lastPushTime: Date, aimigoEnergy: number): Promise<User> {
   return await prisma.user.update({
     where: { id },
-    data: { lastPushTime },
+    data: {
+      lastPushTime,
+      aimigoEnergy,
+    },
   })
 }
 export async function deleteUser(id: string): Promise<User> {

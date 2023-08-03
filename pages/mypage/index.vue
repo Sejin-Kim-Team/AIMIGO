@@ -60,19 +60,12 @@ async function getUser() {
 getUser()
 
 async function onSaveMyPage() {
-  // users/name
-  await useFetch('/api/users/name', {
-    method: 'PUT',
-    body: {
-      id: thisUser.value?.id,
-      name: myName.value,
-    },
-  })
   // users/push
   await useFetch('/api/users/push', {
     params: { id: thisUser.value?.id },
     method: 'PUT',
     body: {
+      name: myName.value,
       pushEnabled: pushEnabled.value,
       pushToken: '', // TODO: pushToken
       pushPermitStartTime: startTime.value,

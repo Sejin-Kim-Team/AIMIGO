@@ -6,26 +6,25 @@ export default defineNitroPlugin(() => {
   startPushScheduler()
 })
 
+const useEnergy = (energy: number) => energy - 30
 function startPushScheduler() {
   const scheduler = useScheduler()
 
   scheduler.run (() => {
     console.log('push scheduler started')
     const today = new Date()
-    const yesterday = new Date(today.setDate(today.getDate() - 1))
     const time = today.getHours()
-    console.log(`today: ${today.toTimeString()}, yesterday: ${yesterday.toTimeString()}, time: ${time}`)
-    const users = getUsersWherePushEnabled(yesterday, time)
+    const users = getUsersWherePushEnabled(time)
       .then(async (users) => {
         console.log(users.length)
         for (const user of users) {
           const token = user.pushToken
           const mbti = user.aimigoMbti
+          const usedEnergy = useEnergy(user.aimigoEnergy)
 
           const sendPushRatio = mbti !== null && mbti.toUpperCase().startsWith('E') ? 0.8 : 0.5
           const sendPush = (Math.random() < sendPushRatio && token !== null)
-          if (sendPush) {
-            // send push
+          if (sendPush && usedEnergy >= 0) {
             const sendResult = await messaging.send(
               {
                 token,
@@ -35,14 +34,14 @@ function startPushScheduler() {
                 },
               },
             )
-            await updateUserLastPushTime(user.id, new Date())
-            console.log(`send push to ${user.name}`)
+            await updateUserLastPushTime(user.id, new Date(), usedEnergy)
+            console.log(`send push to ${user.name}, remain energy: ${usedEnergy}`)
           }
         }
       }).finally(() => {
         console.log('push scheduler finished')
       })
-  }).cron('0 */1 * * *', 'Asia/Seoul')
+  }).cron('*/1 * * * *', 'Asia/Seoul')
 }
 function getNotificationSentence(name: string): string {
   const sentences = [
@@ -57,6 +56,10 @@ function getNotificationSentence(name: string): string {
     '{name}, 오늘 운동 너무 힘들었다..!',
     '{name}, 컨디션은 좀 어떄?',
     '{name}, 오늘도 고생했어!',
+    '{name}, 심심해',
+    '{name}, 저녁 메뉴 추천좀',
+    '{name}, 이 노래 들어봤어?',
+    '{name}, 커피타임?',
   ]
 
   const randomIndex = Math.floor(Math.random() * sentences.length)

@@ -43,6 +43,7 @@ export default defineNuxtConfig({
     auth: {
       clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
       clientSecret: process.env.NUXT_AUTH_CLIENT_SECRET ?? '',
+      secret: process.env.NUXT_AUTH_SECRET ?? '',
     },
     fcm: {
       projectId: process.env.NUXT_FCM_PROJECT_ID ?? '',

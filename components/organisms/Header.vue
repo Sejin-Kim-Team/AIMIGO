@@ -15,7 +15,7 @@ const thisUser = ref<User | null>(null)
 const heart = ref<number>(5)
 
 const computedHeart = computed(() => {
-  if (heart.value === 5)
+  if (heart.value === 20)
     return HEART_FULL
   else if (heart.value === 0)
     return HEART_ZERO
@@ -39,8 +39,8 @@ async function getUser() {
     return getErrorResponse(StatusCode.NOT_FOUND, 'Unauthenticated')
 
   heart.value = thisUser.value.remainedHeart ?? 0
-  if (heart.value > 5)
-    heart.value = 5
+  if (heart.value > 20)
+    heart.value = 20
   // TODO: 실제로 5개로 update 로직 필요.
 }
 

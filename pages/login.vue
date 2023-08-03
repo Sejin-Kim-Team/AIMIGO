@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { definePageMeta, useAuth } from '#imports'
 import KButton from '~/components/atoms/KButton.vue'
-
-const { signIn, token, data, status, lastRefreshedAt } = useAuth()
-
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: '/',
-  },
+  }
 })
+
+const { signIn, token, data, status, lastRefreshedAt } = useAuth()
 </script>
 
 <template>

@@ -17,5 +17,5 @@ export default NuxtAuthHandler({
       accessTokenUrl: 'https://oauth2.googleapis.com/token',
     }),
   ],
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as any,
 })

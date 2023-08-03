@@ -12,7 +12,6 @@ import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 definePageMeta({
   name: 'Home',
   layout: 'default',
-  middleware: ['auth'],
 })
 
 interface Chat {

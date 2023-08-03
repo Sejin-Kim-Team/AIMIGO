@@ -1,4 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
+  console.log('fucking')
   if (to.path === '/login')
     return
 
@@ -15,6 +16,5 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       return navigateTo(`/login?redirect=${to.path}`)
     }
   }
-
   await nextTick()
 })

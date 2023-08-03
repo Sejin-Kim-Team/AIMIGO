@@ -75,8 +75,8 @@ async function onSaveMyPage() {
     body: {
       pushEnabled: pushEnabled.value,
       pushToken: '', // TODO: pushToken
-      pushStartTime: startTime.value,
-      pushEndTime: endTime.value,
+      pushPermitStartTime: startTime.value,
+      pushPermitEndTime: endTime.value,
     },
   })
 }

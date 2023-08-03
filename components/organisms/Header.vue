@@ -43,7 +43,10 @@ async function getUser() {
     heart.value = 5
   // TODO: 실제로 5개로 update 로직 필요.
 }
-getUser()
+
+onMounted(() => {
+  getUser()
+})
 </script>
 
 <template>

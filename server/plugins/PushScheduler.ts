@@ -1,5 +1,5 @@
 import { useScheduler } from '#scheduler'
-import { getUsersWherePushEnabled } from '~/server/data/users'
+import { getUsersWherePushEnabled, updateUserLastPushTime } from '~/server/data/users'
 import { messaging } from '~/server/utils/firebase'
 
 export default defineNitroPlugin(() => {
@@ -20,7 +20,10 @@ function startPushScheduler() {
         console.log(users.length)
         for (const user of users) {
           const token = user.pushToken
-          const sendPush = (Math.random() < 0.5 && token !== null)
+          const mbti = user.aimigoMbti
+
+          const sendPushRatio = mbti !== null && mbti.toUpperCase().startsWith('E') ? 0.8 : 0.5
+          const sendPush = (Math.random() < sendPushRatio && token !== null)
           if (sendPush) {
             // send push
             const sendResult = await messaging.send(
@@ -32,6 +35,7 @@ function startPushScheduler() {
                 },
               },
             )
+            await updateUserLastPushTime(user.id, new Date())
             console.log(`send push to ${user.name}`)
           }
         }

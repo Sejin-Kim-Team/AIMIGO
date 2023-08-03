@@ -1,10 +1,11 @@
 import { getServerSession } from '#auth'
-import { getUserByEmail, updateUserName } from '~/server/data/users'
+import { getUserByEmail, updateAimigoInfo } from '~/server/data/users'
 import { StatusCode } from '~/server/types/types'
 import { getSingleSuccessResponse } from '~/server/utils/CommonResult'
 
 interface Body {
-  name: string
+  aimigoName: string
+  aimigoMbti: string
 }
 
 export default defineEventHandler(async (event) => {
@@ -15,7 +16,7 @@ export default defineEventHandler(async (event) => {
   if (!user)
     return getErrorResponse(StatusCode.NOT_FOUND, null)
 
-  const body = await readBody<Body>(event)
-  const result = await updateUserName(user.id, body.name)
+  const { aimigoName, aimigoMbti } = await readBody<Body>(event)
+  const result = await updateAimigoInfo(user.id, aimigoName, aimigoMbti)
   return getSingleSuccessResponse(result)
 })

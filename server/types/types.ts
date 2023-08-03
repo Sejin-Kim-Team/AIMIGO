@@ -3,6 +3,8 @@ export interface User {
   oauthId: string
   name: string
   remainedHeart: number
+  aimigoName: string
+  aimigoMbti: string
   pushEnabled: boolean
   pushToken: string | null
   pushPermitStartTime: number | null
@@ -10,7 +12,6 @@ export interface User {
   lastPushTime: Date | null
   createdAt: Date
   updatedAt: Date
-  aimigos: Aimigo[]
 }
 
 export interface UserPushUpdateRequest {
@@ -19,15 +20,6 @@ export interface UserPushUpdateRequest {
   pushPermitStartTime: number | null
   pushPermitEndTime: number | null
 }
-
-export interface Aimigo {
-  id: number
-  name: string
-  mbti: string
-  createdAt: Date
-  updatedAt: Date
-}
-
 export enum StatusCode {
   OK = 200,
   CREATED = 201,

@@ -56,5 +56,7 @@ model User {
   lastPushTime DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  aimigoName String?
+  aimigoMbti String?
   remainedHeart Int @default(5)
 }

@@ -113,6 +113,8 @@ async function requestMessage(message: string) {
 
 const { user } = await getSession()
 const sessionUserInfo = computed(() => user)
+
+// TODO: aimigo 정보가 없으면 생성 페이지로 이동
 </script>
 
 <template>

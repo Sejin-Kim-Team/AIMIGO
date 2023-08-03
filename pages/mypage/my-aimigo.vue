@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Avatar from '~/components/atoms/widgets/Avatar.vue'
 import ENFJ_JSON from '~/assets/json/enfj-avatar-01.json'
 import ENFP_JSON from '~/assets/json/enfp-avatar-01.json'
 import ENTJ_JSON from '~/assets/json/entj-avatar-01.json'
@@ -19,10 +18,16 @@ import ISFJ_JSON from '~/assets/json/isfj-avatar-01.json'
 import ISFP_JSON from '~/assets/json/isfp-avatar-01.json'
 import ISTJ_JSON from '~/assets/json/istj-avatar-01.json'
 import ISTP_JSON from '~/assets/json/istp-avatar-01.json'
-import { MBTI_LIST } from '~/constants/characters.constants'
+
+import Avatar from '~/components/atoms/widgets/Avatar.vue'
+import KInput from '~/components/atoms/KInput.vue'
+import { MBTI } from '~/constants/characters.constants'
 import KButton from '~/components/atoms/KButton.vue'
 
-const focusedCharacter = ref(null)
+const route = useRouter()
+const query = route.currentRoute.value.query
+const aimigoName = ref<string>('')
+const mbti = ref<string>(query.mbti as string)
 
 const mbtiJsons = [
   ENFJ_JSON,
@@ -43,52 +48,42 @@ const mbtiJsons = [
   ISTP_JSON,
 ]
 
-function onClickCharacter(index: any) {
-  focusedCharacter.value = index
-}
+const computedJson = (mbtiJsons[MBTI[mbti.value as keyof MBTI]])
+const isNamed = computed(() => aimigoName.value.length > 0)
 
-async function onClickSubmit(mbti: any) {
-  // TODO: mbti 저장 -> session storage
-
-  await navigateTo(`/mypage/my-aimigo?mbti=${mbti}`)
+async function onClickSubmit() {
+  await navigateTo('/')
 }
 </script>
 
 <template>
-  <span class="text-xl text-gray-400">Choose Your AIMIGO</span>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div v-for="(mbti, index) in mbtiJsons" :key="index">
-      <div class="character" @click="onClickCharacter(index)">
-        <div class="character-image">
-          <Avatar :option="mbti" />
-        </div>
-        <div class="character-name" :class="index === focusedCharacter ? 'focused-character' : ''">
-          {{ MBTI_LIST[index] }}
+  <div class="flex justify-center">
+    <div class="card w-[800px] h-[600px] py-20 bg-base-200 shadow-xl place-items-center">
+      <div class="character-image">
+        <Avatar :option="computedJson" />
+      </div>
+      <div class="card-body items-center text-center">
+        <div class="text-xl font-light w-full">
+          <div class="my-8">
+            AIMIGO의 이름을 정해주세요.
+          </div>
+          <KInput
+            v-model="aimigoName"
+            class="w-full"
+            placeholder=""
+          />
         </div>
       </div>
     </div>
   </div>
-  <div v-if="focusedCharacter" class="flex justify-end">
-    <KButton @click="onClickSubmit(MBTI_LIST[focusedCharacter])">
-      다음
+
+  <div v-if="isNamed" class="flex justify-end">
+    <KButton @click="onClickSubmit()">
+      시작하기
     </KButton>
   </div>
 </template>
 
 <style scoped lang="scss">
-.character {
-  @apply text-center rounded-t-3xl cursor-pointer;
-}
 
-.character-image {
-  @apply rounded-3xl hover:shadow-xl;
-}
-
-.focused-character {
-  @apply bg-accent/25 rounded-full text-accent-focus;
-}
-
-.character-name {
-  @apply drop-shadow-xl font-bold;
-}
 </style>

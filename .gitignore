@@ -25,3 +25,5 @@ logs
 prisma/migrations
 *.http
 firebase-admin.json
+
+yarn.lock

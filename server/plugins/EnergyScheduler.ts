@@ -23,7 +23,7 @@ function startEnergyScheduler() {
       }).finally(() => {
         console.log('energy scheduler finished')
       })
-  }).cron('*/1 * * * *', 'Asia/Seoul')
+  }).cron('*/30 * * * *', 'Asia/Seoul')
 }
 
 function getChargedEnergy(isOutgoing: boolean, energy: number): number {

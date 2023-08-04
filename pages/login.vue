@@ -9,7 +9,7 @@ definePageMeta({
   layout: 'login',
 })
 
-const { signIn, token, data, status, lastRefreshedAt } = useAuth()
+const { signIn } = useAuth()
 </script>
 
 <template>

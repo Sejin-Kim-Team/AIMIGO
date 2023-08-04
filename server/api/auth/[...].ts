@@ -11,7 +11,6 @@ export default NuxtAuthHandler({
   pages: {
     signIn: '/login',
   },
-  secret: 'r30r8reightrkfdpofbtriotr43it5',
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GoogleProvider.default({

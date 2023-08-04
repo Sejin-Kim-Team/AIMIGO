@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import KButton from '~/components/atoms/KButton.vue'
+
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: '/',
-  }
+  },
+  layout: 'login',
 })
 
 const { signIn, token, data, status, lastRefreshedAt } = useAuth()

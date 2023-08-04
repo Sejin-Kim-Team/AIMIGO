@@ -22,8 +22,18 @@ export async function getUsersWherePushEnabled(time: number): Promise<User[]> {
   return await prisma.user.findMany({
     where: {
       pushEnabled: true,
-      pushPermitStartTime: { gte: time },
-      pushPermitEndTime: { lte: time },
+      aimigoEnergy: { gte: 30 },
+      OR: [
+        {
+          pushPermitStartTime: { gte: time },
+          pushPermitEndTime: { lte: time },
+        }, {
+          pushPermitStartTime: time,
+        },
+        {
+          pushPermitEndTime: time,
+        },
+      ],
     },
   })
 }

@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<Body>(event)
 
   const text = await handleChatApi(user, body)
-  const emotion = await handleEmotionApi(text)
+  const emotion = await handleEmotionApi(`${body.message} ${text}`)
 
   const changedUser = await updateUserHeart(user.id, remainedHeart - 1)
   const result: Result = {

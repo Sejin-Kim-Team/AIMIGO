@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import Avatar02 from 'assets/images/avatar-02.png'
+import Avatar01 from 'assets/images/avatar-01.png'
 import KButton from '~/components/atoms/KButton.vue'
+import { useElementHover } from '#imports'
 
 definePageMeta({
   auth: {
@@ -9,19 +12,24 @@ definePageMeta({
   layout: 'sessionless',
 })
 
+const btnRef = ref<HTMLElement>()
+const isHovered = useElementHover(btnRef)
+const src = computed(() => isHovered.value ? Avatar02 : Avatar01)
+
 const { signIn } = useAuth()
 </script>
 
 <template>
-  <div class="flex justify-center">
-    <div class="p-4 rounded-lg shadow-md w-[400px] h-[600px]">
-      <div class="text-xl text-center">
-        로그인/회원가입
-      </div>
-      <div class="flex flex-col justify-center h-full">
-        <KButton class="btn-outline" @click="signIn('google')">
+  <div class="mx-auto mt-8 card max-w-lg rounded-box shadow-lg bg-base-200">
+    <figure><img :src="src" alt="Avatar" class="max-w-[240px] mt-8 mx-auto"></figure>
+    <div class="card-body">
+      <div class="card-actions">
+        <h2 class="text-center w-full text-lg">
+          당신의 친구 AIMIGO! 와 함깨 해 보세요 :)
+        </h2>
+        <KButton ref="btnRef" class="w-full btn-primary" @click="signIn('google')">
           <Icon name="logos:google-icon" size="28" />
-          아이디로 로그인
+          구글 아이디로 로그인
         </KButton>
       </div>
     </div>

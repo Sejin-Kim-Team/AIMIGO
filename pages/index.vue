@@ -1,27 +1,22 @@
 <script setup lang="ts">
 definePageMeta({
-  name: 'Home',
+  name: 'Introduce',
   layout: 'sessionless',
   auth: false,
 })
+
+const { data } = await useFetch('/api/_content/query')
+const doc = (data.value as any)[0]
 </script>
 
 <template>
-  <article>
-    Hello World
-    <NuxtLink to="chat">
-      Chat
-    </NuxtLink>
-  </article>
+  <main v-if="data">
+    <ContentRenderer :value="doc" />
+  </main>
 </template>
 
 <style scoped>
-article {
-  position: relative;
-}
-
-.chat-wrapper {
-  height: calc(100vh - 280px);
-  overflow-y: scroll;
+main {
+  @apply prose relative mx-auto;
 }
 </style>

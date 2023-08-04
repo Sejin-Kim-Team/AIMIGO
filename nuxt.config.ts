@@ -13,7 +13,11 @@ export default defineNuxtConfig({
     'nuxt-scheduler',
     '@sidebase/nuxt-auth',
     '@pinia/nuxt',
+    '@nuxt/content',
   ],
+  content: {
+    // https://content.nuxtjs.org/api/configuration
+  },
   css: [
     '~/assets/styles/main.scss',
   ],

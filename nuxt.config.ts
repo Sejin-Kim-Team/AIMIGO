@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     'nuxt-snackbar',
     'nuxt-scheduler',
     '@sidebase/nuxt-auth',
+    'nuxt-logrocket',
   ],
   css: [
     '~/assets/styles/main.scss',
@@ -59,5 +60,9 @@ export default defineNuxtConfig({
         external: ['openai'],
       },
     },
+  },
+  logRocket: {
+    id: 'gpgrhj/aimigo',
+    dev: false,
   },
 })

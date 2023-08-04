@@ -1,10 +1,13 @@
 export interface User {
   id: string
-  oauthId: string
+  email: string
   name: string
+  emailVerified: Date | null
+  image: string | null
   remainedHeart: number
   aimigoName: string
   aimigoMbti: string
+  aimigoEnergy: number
   pushEnabled: boolean
   pushToken: string | null
   pushPermitStartTime: number | null
@@ -15,6 +18,7 @@ export interface User {
 }
 
 export interface UserPushUpdateRequest {
+  name: string
   pushEnabled: boolean
   pushToken: string | null
   pushPermitStartTime: number | null

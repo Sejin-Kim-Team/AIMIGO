@@ -12,8 +12,10 @@ function startHeartScheduler() {
     const users = getUsers()
       .then(async (users) => {
         for (const user of users) {
-          const result = await updateUserHeart(user.id, user.remainedHeart + 1)
-          console.log(`update heart to ${user.name}`)
+          if (user.remainedHeart < 20) {
+            const result = await updateUserHeart(user.id, user.remainedHeart + 1)
+            console.log(`update heart to ${user.name}`)
+          }
         }
       }).finally(() => {
         console.log('heart scheduler finished')

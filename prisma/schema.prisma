@@ -58,5 +58,6 @@ model User {
   updatedAt DateTime @updatedAt
   aimigoName String?
   aimigoMbti String?
-  remainedHeart Int @default(5)
+  aimigoEnergy Int @default(100)
+  remainedHeart Int @default(20)
 }

@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/content',
   ],
+  buildModules: [
+    '@nuxtjs/pwa',
+  ],
   content: {
     // https://content.nuxtjs.org/api/configuration
   },
@@ -54,6 +57,7 @@ export default defineNuxtConfig({
     auth: {
       clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
       clientSecret: process.env.NUXT_AUTH_CLIENT_SECRET ?? '',
+      secret: process.env.NUXT_AUTH_SECRET ?? '',
     },
     kakao: {
       clientId: process.env.NUXT_KAKAO_CLIENT_ID ?? '',

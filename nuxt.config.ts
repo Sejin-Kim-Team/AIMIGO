@@ -1,24 +1,31 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
-  devtools: { enabled: true },
   app: {
     head: {
       title: 'AIMIGO!',
     },
   },
   modules: [
-    '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     'nuxt-icon',
     'nuxt-snackbar',
     'nuxt-scheduler',
     '@sidebase/nuxt-auth',
+    '@pinia/nuxt',
   ],
   css: [
     '~/assets/styles/main.scss',
   ],
+  auth: {
+    origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://aimigo.eggp.io',
+    provider: {
+      type: 'authjs',
+    },
+    globalAppMiddleware: {
+      isEnabled: true,
+    },
+  },
   tailwindcss: {
     // Options
   },
@@ -44,6 +51,10 @@ export default defineNuxtConfig({
       clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
       clientSecret: process.env.NUXT_AUTH_CLIENT_SECRET ?? '',
       secret: process.env.NUXT_AUTH_SECRET ?? '',
+    },
+    kakao: {
+      clientId: process.env.NUXT_KAKAO_CLIENT_ID ?? '',
+      clientSecret: process.env.NUXT_KAKAO_CLIENT_SECRET ?? '',
     },
     fcm: {
       projectId: process.env.NUXT_FCM_PROJECT_ID ?? '',

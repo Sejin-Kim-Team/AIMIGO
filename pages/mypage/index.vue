@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import KButton from '~/components/atoms/KButton.vue'
 import type { User } from '~/server/types/types'
-import { StatusCode } from '~/server/types/types'
 
 const { getSession } = useAuth()
 const myName = ref<string>('')
@@ -41,7 +40,7 @@ function onChangeEndTime(e: Event) {
 async function getUser() {
   const session = await getSession()
   if (!session)
-    return getErrorResponse(StatusCode.FORBIDDEN, 'Unauthenticated')
+    throw new Error('Session is null')
 
   const email = session.user?.email ?? ''
   const { data } = await useFetch('/api/users', {

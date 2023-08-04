@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import KButton from '~/components/atoms/KButton.vue'
+
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
-    navigateAuthenticatedTo: '/',
-  }
+    navigateAuthenticatedTo: '/chat',
+  },
+  layout: 'sessionless',
 })
 
-const { signIn, token, data, status, lastRefreshedAt } = useAuth()
+const { signIn } = useAuth()
 </script>
 
 <template>
@@ -17,7 +19,7 @@ const { signIn, token, data, status, lastRefreshedAt } = useAuth()
         로그인/회원가입
       </div>
       <div class="flex flex-col justify-center h-full">
-        <KButton class="btn-outline" @click="signIn('google', { callbackUrl: '/' })">
+        <KButton class="btn-outline" @click="signIn('google')">
           <Icon name="logos:google-icon" size="28" />
           아이디로 로그인
         </KButton>

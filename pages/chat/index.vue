@@ -22,6 +22,8 @@ interface Chat {
 
 const { status, getSession } = useAuth()
 
+const session = await getSession()
+
 const loading = ref<boolean>(false)
 const message = ref<string>('')
 const currentIndex = ref<number>(0)
@@ -35,7 +37,7 @@ const inputRef = ref<HTMLInputElement>()
 const { width, left } = useElementBounding(chatRef)
 const { focused: inputFocused } = useFocus(inputRef)
 
-const senderId = ref('SeongHwa Kim')
+const senderId = ref(session.user!.name as string)
 
 async function handleSubmit() {
   const chat: Chat = {
@@ -43,6 +45,8 @@ async function handleSubmit() {
     time: new Date().toISOString(),
     message: message.value,
   }
+
+  message.value = ''
 
   chats.value.push(chat)
 
@@ -136,7 +140,7 @@ const sessionUserInfo = computed(() => user)
           </figure>
           <div class="card-body items-center text-center">
             <h2 class="card-title">
-              Sejin Kim
+              AIMIGO
             </h2>
           </div>
         </div>

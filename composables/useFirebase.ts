@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import type { Messaging } from 'firebase/messaging'
 
 import { getMessaging, getToken, onMessage } from 'firebase/messaging'
-import { tryOnBeforeUnmount } from '@vueuse/shared'
+import { tryOnBeforeUnmount, tryOnMounted } from '@vueuse/shared'
 
 export function useFirebase() {
   const firebaseConfig = {
@@ -18,7 +18,7 @@ export function useFirebase() {
   const messagingRef = shallowRef<Messaging | null>(null)
   const requestTokenRef = ref<string | null>(null)
 
-  async function requestPermission() {
+  async function tryRequestPermission() {
     if (!window || !navigator || !Notification)
       return
     const permission = await Notification.requestPermission()
@@ -47,7 +47,10 @@ export function useFirebase() {
     })
   }
 
-  tryOnMounted(() => tryRequestToken())
+  tryOnMounted(async () => {
+    await tryRequestPermission()
+    await tryRequestToken()
+  })
 
   tryOnBeforeUnmount(() => {
     messagingRef.value = null
@@ -58,7 +61,5 @@ export function useFirebase() {
     firebaseApp,
     messaging: messagingRef,
     requestToken: requestTokenRef,
-    requestPermission,
-    tryRequestToken,
   }
 }

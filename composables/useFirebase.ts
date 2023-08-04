@@ -46,38 +46,39 @@ export function useFirebase() {
       console.log('Message received. ', payload)
     })
 
-  //   onMessage(messagingRef.value, (payload) => {
-  //     console.log('Message received. ', payload)
-  //     navigator.serviceWorker.ready.then((registration) => {
-  //       if (!payload || !payload.notification || !payload.notification.title || !payload.notification.body)
-  //         return
-  //
-  //       registration.showNotification(payload.notification.title, {
-  //         body: payload.notification.body,
-  //         icon: '/favicon.ico',
-  //         vibrate: [200, 100, 200, 100, 200, 100, 200],
-  //       }).finally(() => {
-  //         console.log('Notification sent')
-  //       })
-  //     }).catch((err) => {
-  //       console.log('ServiceWorker send failed: ', err)
-  //     })
-  //   })
-  // }
+    //   onMessage(messagingRef.value, (payload) => {
+    //     console.log('Message received. ', payload)
+    //     navigator.serviceWorker.ready.then((registration) => {
+    //       if (!payload || !payload.notification || !payload.notification.title || !payload.notification.body)
+    //         return
+    //
+    //       registration.showNotification(payload.notification.title, {
+    //         body: payload.notification.body,
+    //         icon: '/favicon.ico',
+    //         vibrate: [200, 100, 200, 100, 200, 100, 200],
+    //       }).finally(() => {
+    //         console.log('Notification sent')
+    //       })
+    //     }).catch((err) => {
+    //       console.log('ServiceWorker send failed: ', err)
+    //     })
+    //   })
+    // }
 
-  tryOnMounted(async () => {
-    await tryRequestPermission()
-    await tryRequestToken()
-  })
+    tryOnMounted(async () => {
+      await tryRequestPermission()
+      await tryRequestToken()
+    })
 
-  tryOnBeforeUnmount(() => {
-    messagingRef.value = null
-    requestTokenRef.value = null
-  })
+    tryOnBeforeUnmount(() => {
+      messagingRef.value = null
+      requestTokenRef.value = null
+    })
 
-  return {
-    firebaseApp,
-    messaging: messagingRef,
-    requestToken: requestTokenRef,
+    return {
+      firebaseApp,
+      messaging: messagingRef,
+      requestToken: requestTokenRef,
+    }
   }
 }

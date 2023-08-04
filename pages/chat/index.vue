@@ -186,7 +186,7 @@ tryOnMounted(() => {
               class="w-full join-item"
             />
 
-            <KButton class="join-item rounded-r-full" type="submit">
+            <KButton class="join-item rounded-r-full" type="submit" :disabled="loading">
               <Icon :name="loading ? CHAT_MESSAGE_SENDING : SEND_MESSAGE" />
             </KButton>
           </div>

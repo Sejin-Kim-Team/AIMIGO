@@ -24,6 +24,7 @@ function startPushScheduler() {
 
           const sendPushRatio = mbti !== null && mbti.toUpperCase().startsWith('E') ? 0.8 : 0.5
           const sendPush = (Math.random() < sendPushRatio && token !== null)
+          console.log(`send push: ${sendPush}, usedE: ${usedEnergy}, token: ${token}`)
           if (sendPush && usedEnergy >= 0) {
             const sendResult = await messaging.send(
               {
@@ -33,7 +34,9 @@ function startPushScheduler() {
                   body: getNotificationSentence(user.name),
                 },
               },
-            )
+            ).catch((err) => {
+              console.log(err)
+            })
             await updateUserLastPushTime(user.id, new Date(), usedEnergy)
             console.log(`send push to ${user.name}, remain energy: ${usedEnergy}`)
           }

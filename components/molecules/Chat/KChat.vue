@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { formatDateString } from '~/utils/dates'
+
 const props = withDefaults(defineProps<{
   end?: boolean
   time?: string
@@ -20,7 +22,7 @@ const computedClass = computed(() => {
     <div class="chat-header">
       {{ sender }}
       <time class="text-xs opacity-50">
-        {{ time }}
+        {{ formatDateString(time) }}
       </time>
     </div>
     <div class="chat-bubble">

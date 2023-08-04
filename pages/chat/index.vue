@@ -69,31 +69,27 @@ function handleTyped() {
 }
 
 async function requestMessage(message: string) {
-  const [_chat, _emotional] = await Promise.all([
-    useFetch<{
-      message: string
-      body: string
-    }>('/api/chat', {
-      method: 'post',
-      body: {
-        message,
-        name: aimigo.value!.name,
-        mbti: `${aimigo.value!.type}`,
-      },
-    }),
-    useFetch<{
-      body: {
-        sentiment: 'positive' | 'negative' | 'netural'
+  const { data } = await useFetch<{
+    body: {
+      text: string
+      heart: number
+      emotion: {
+        sentiment: 'netural' | 'positive' | 'negative'
+        confidence: {
+          negative: number
+          positive: number
+          neutral: number
+        }
       }
-    }>('/api/emotion', {
-      method: 'post',
-      body: {
-        message,
-      },
-    }),
-  ])
-  const data = _chat.data
-  const emotionalData = _emotional.data
+    }
+  }>('/api/chat', {
+    method: 'post',
+    body: {
+      message,
+      name: aimigo.value!.name,
+      mbti: `${aimigo.value!.type}`,
+    },
+  })
 
   if (data.value === null)
     return
@@ -101,10 +97,10 @@ async function requestMessage(message: string) {
   const chat: Chat = {
     sender: aimigo.value!.name,
     time: new Date().toISOString(),
-    message: data.value.body,
+    message: data.value.body.text,
   }
 
-  const sentiment = emotionalData.value!.body.sentiment
+  const sentiment = data.value.body.emotion.sentiment
 
   if (sentiment === 'netural')
     emotion.value = 'Normal'
@@ -121,7 +117,6 @@ const sessionUserInfo = computed(() => user)
 
 tryOnMounted(() => {
   aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
-  console.log('fucking', aimigo.value)
   if (aimigo.value === null)
     navigateTo('/mypage/mbti-characters')
 })

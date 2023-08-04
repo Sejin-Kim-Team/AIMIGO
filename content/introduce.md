@@ -1,4 +1,7 @@
-# AIMIGO! - 과제 제출
+# AIMIGO!
+
+::StartCard
+::
 
 ## Introduce!  AI + Amigo + 🤩 = AIMIGO!
 

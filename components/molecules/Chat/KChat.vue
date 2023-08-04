@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { elapsedTime } from '~/utils/date'
+
 const props = withDefaults(defineProps<{
   end?: boolean
   time?: string
@@ -19,8 +21,8 @@ const computedClass = computed(() => {
   <div :class="computedClass">
     <div class="chat-header">
       {{ sender }}
-      <time class="text-xs opacity-50">
-        {{ time }}
+      <time v-if="time" class="text-xs opacity-50">
+        {{ elapsedTime(time) }}
       </time>
     </div>
     <div class="chat-bubble">

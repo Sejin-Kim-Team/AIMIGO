@@ -8,6 +8,8 @@ export default eventHandler(async (event) => {
 
   const uri = getRequestURL(event).pathname
 
-  if (!uri.includes('/login') && !uri.includes('/auth') && !session)
+  console.log('fucking', uri)
+
+  if (uri !== '/' && !uri.includes('/login') && !uri.includes('/auth') && !session)
     throw createError({ statusMessage: 'Unauthenticated', statusCode: 403 })
 })

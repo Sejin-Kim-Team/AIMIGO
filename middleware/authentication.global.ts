@@ -10,5 +10,5 @@ export default defineNuxtRouteMiddleware((to) => {
    *
    * So to avoid calling it, we return it immediately.
    */
-  return signIn(undefined, { callbackUrl: to.path }) as ReturnType<typeof navigateTo>
+  return navigateTo(`/login?to=${to.path}`)
 })

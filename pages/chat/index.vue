@@ -21,19 +21,6 @@ interface Chat {
   message: string
 }
 
-interface ChatResult {
-  text: string
-  heart: number
-  emotion: {
-    sentiment: 'netural' | 'positive' | 'negative'
-    confidence: {
-      negative: number
-      positive: number
-      neutral: number
-    }
-  }
-}
-
 const { status, getSession } = useAuth()
 
 const session = await getSession()
@@ -82,7 +69,20 @@ function handleTyped() {
 }
 
 async function requestMessage(message: string) {
-  const _chat = await useFetch<ChatResult>('/api/chat', {
+  const { data } = await useFetch<{
+    body: {
+      text: string
+      heart: number
+      emotion: {
+        sentiment: 'netural' | 'positive' | 'negative'
+        confidence: {
+          negative: number
+          positive: number
+          neutral: number
+        }
+      }
+    }
+  }>('/api/chat', {
     method: 'post',
     body: {
       message,
@@ -90,8 +90,6 @@ async function requestMessage(message: string) {
       mbti: `${aimigo.value!.type}`,
     },
   })
-
-  const data = _chat.data
 
   if (data.value === null)
     return
@@ -119,7 +117,6 @@ const sessionUserInfo = computed(() => user)
 
 tryOnMounted(() => {
   aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
-  console.log('fucking', aimigo.value)
   if (aimigo.value === null)
     navigateTo('/mypage/mbti-characters')
 })

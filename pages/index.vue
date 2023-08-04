@@ -11,7 +11,9 @@ const doc = (data.value as any)[0]
 
 <template>
   <main v-if="data">
-    <ContentRenderer :value="doc" />
+    <div class="mt-12">
+      <ContentRenderer :value="doc" />
+    </div>
   </main>
 </template>
 

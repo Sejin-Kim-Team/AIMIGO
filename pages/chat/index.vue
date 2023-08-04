@@ -21,6 +21,19 @@ interface Chat {
   message: string
 }
 
+interface ChatResult {
+  text: string
+  heart: number
+  emotion: {
+    sentiment: 'netural' | 'positive' | 'negative'
+    confidence: {
+      negative: number
+      positive: number
+      neutral: number
+    }
+  }
+}
+
 const { status, getSession } = useAuth()
 
 const session = await getSession()
@@ -69,31 +82,16 @@ function handleTyped() {
 }
 
 async function requestMessage(message: string) {
-  const [_chat, _emotional] = await Promise.all([
-    useFetch<{
-      message: string
-      body: string
-    }>('/api/chat', {
-      method: 'post',
-      body: {
-        message,
-        name: aimigo.value!.name,
-        mbti: `${aimigo.value!.type}`,
-      },
-    }),
-    useFetch<{
-      body: {
-        sentiment: 'positive' | 'negative' | 'netural'
-      }
-    }>('/api/emotion', {
-      method: 'post',
-      body: {
-        message,
-      },
-    }),
-  ])
+  const _chat = await useFetch<ChatResult>('/api/chat', {
+    method: 'post',
+    body: {
+      message,
+      name: aimigo.value!.name,
+      mbti: `${aimigo.value!.type}`,
+    },
+  })
+
   const data = _chat.data
-  const emotionalData = _emotional.data
 
   if (data.value === null)
     return
@@ -101,10 +99,10 @@ async function requestMessage(message: string) {
   const chat: Chat = {
     sender: aimigo.value!.name,
     time: new Date().toISOString(),
-    message: data.value.body,
+    message: data.value.body.text,
   }
 
-  const sentiment = emotionalData.value!.body.sentiment
+  const sentiment = data.value.body.emotion.sentiment
 
   if (sentiment === 'netural')
     emotion.value = 'Normal'

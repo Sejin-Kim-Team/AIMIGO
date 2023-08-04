@@ -1,5 +1,5 @@
-import {getServerSession} from "#auth";
-import {getUserByEmail, updateUserPushTime} from '~/server/data/users'
+import { getServerSession } from '#auth'
+import { getUserByEmail, updateUserPushTime } from '~/server/data/users'
 import type { UserPushUpdateRequest } from '~/server/types/types'
 import { StatusCode } from '~/server/types/types'
 import { getErrorResponse, getSingleSuccessResponse } from '~/server/utils/CommonResult'

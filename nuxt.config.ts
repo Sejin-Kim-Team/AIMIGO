@@ -1,21 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  devtools: { enabled: true },
   app: {
     head: {
       title: 'AIMIGO!',
     },
   },
   modules: [
-    '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     'nuxt-icon',
     'nuxt-snackbar',
     'nuxt-scheduler',
     '@sidebase/nuxt-auth',
-    'nuxt-logrocket',
+    '@pinia/nuxt',
   ],
   css: [
     '~/assets/styles/main.scss',
@@ -60,9 +58,5 @@ export default defineNuxtConfig({
         external: ['openai'],
       },
     },
-  },
-  logRocket: {
-    id: 'gpgrhj/aimigo',
-    dev: false,
   },
 })

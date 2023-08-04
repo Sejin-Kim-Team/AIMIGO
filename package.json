@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "aimigo",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -7,7 +7,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "start": "nuxt start",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare && prisma generate"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.8",
@@ -33,9 +33,9 @@
     "firebase": "^10.1.0",
     "firebase-admin": "^11.10.1",
     "langchain": "^0.0.119",
+    "logrocket": "^5.0.1",
     "next-auth": "4.21.1",
     "nuxt-icon": "^0.4.2",
-    "nuxt-logrocket": "^2.0.14",
     "nuxt-snackbar": "^1.0.3"
   },
   "prisma": {}

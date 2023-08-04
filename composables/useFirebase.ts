@@ -30,7 +30,6 @@ export function useFirebase() {
     }
     else {
       console.log('Unable to get permission to notify.')
-      alert('알림을 허용해주세요.')
       return false
     }
   }
@@ -38,32 +37,27 @@ export function useFirebase() {
   async function tryRequestToken() {
     const messaging = getMessaging()
     messagingRef.value = messaging
-
-    const requestToken = await getToken(messaging, { vapidKey: 'BIUfNhBiY50v4ZzjRYOE4azoV7KAKpVtehBK0zAoXPvNsjD19m-C32CD_9H02DUlrIwAiz404-qLxcsAwbS3nI8' })
-    requestTokenRef.value = requestToken
-
     onMessage(messagingRef.value, (payload) => {
       console.log('Message received. ', payload)
+      if (!payload || !payload.notification || !payload.notification.title || !payload.notification.body)
+        return
+      const notification = new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: '/favicon.ico',
+        vibrate: [200, 100, 200, 100, 200, 100, 200],
+      })
+
+      notification.onshow = () => {
+        console.log('Notification shown')
+      }
+
+      notification.onclick = () => {
+        notification.close()
+      }
     })
+    const requestToken = await getToken(messaging, { vapidKey: 'BIUfNhBiY50v4ZzjRYOE4azoV7KAKpVtehBK0zAoXPvNsjD19m-C32CD_9H02DUlrIwAiz404-qLxcsAwbS3nI8' })
+    requestTokenRef.value = requestToken
   }
-  //   onMessage(messagingRef.value, (payload) => {
-  //     console.log('Message received. ', payload)
-  //     navigator.serviceWorker.ready.then((registration) => {
-  //       if (!payload || !payload.notification || !payload.notification.title || !payload.notification.body)
-  //         return
-  //
-  //       registration.showNotification(payload.notification.title, {
-  //         body: payload.notification.body,
-  //         icon: '/favicon.ico',
-  //         vibrate: [200, 100, 200, 100, 200, 100, 200],
-  //       }).finally(() => {
-  //         console.log('Notification sent')
-  //       })
-  //     }).catch((err) => {
-  //       console.log('ServiceWorker send failed: ', err)
-  //     })
-  //   })
-  // }
 
   tryOnMounted(async () => {
     await tryRequestPermission()

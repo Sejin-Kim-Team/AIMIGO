@@ -69,7 +69,7 @@ export async function updateAimigoInfo(id: string, aimigoName: string, aimigoMbt
   })
 }
 export async function updateUserPushTime(id: string, pushUpdateRequest: UserPushUpdateRequest): Promise<User> {
-  const { name, pushPermitStartTime, pushPermitEndTime, pushEnabled, pushToken } = pushUpdateRequest
+  const { name, pushPermitStartTime, pushPermitEndTime, pushEnabled } = pushUpdateRequest
   return await prisma.user.update({
     where: { id },
     data: {
@@ -77,8 +77,14 @@ export async function updateUserPushTime(id: string, pushUpdateRequest: UserPush
       pushEnabled,
       pushPermitStartTime,
       pushPermitEndTime,
-      pushToken,
     },
+  })
+}
+
+export async function updateUserPushToken(id: string, pushToken: string): Promise<User> {
+  return await prisma.user.update({
+    where: { id },
+    data: { pushToken },
   })
 }
 

@@ -1,5 +1,5 @@
 import { getServerSession } from '#auth'
-import { getUserByEmail, updateUserPushTime } from '~/server/data/users'
+import { getUserByEmail, updateUserPushTime, updateUserPushToken } from '~/server/data/users'
 import type { UserPushUpdateRequest } from '~/server/types/types'
 import { StatusCode } from '~/server/types/types'
 import { getErrorResponse, getSingleSuccessResponse } from '~/server/utils/CommonResult'
@@ -17,5 +17,10 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody<UserPushUpdateRequest>(event)
   const result = await updateUserPushTime(userResult.id, body)
+  if (body.pushToken !== null && body.pushToken !== undefined && body.pushToken !== '') {
+    const pushToken = body.pushToken
+    const pushTokenResult = await updateUserPushToken(result.id, pushToken)
+    return getSingleSuccessResponse(pushTokenResult)
+  }
   return getSingleSuccessResponse(result)
 })

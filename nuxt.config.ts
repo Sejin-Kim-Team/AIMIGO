@@ -51,6 +51,10 @@ export default defineNuxtConfig({
       clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
       clientSecret: process.env.NUXT_AUTH_CLIENT_SECRET ?? '',
     },
+    kakao: {
+      clientId: process.env.NUXT_KAKAO_CLIENT_ID ?? '',
+      clientSecret: process.env.NUXT_KAKAO_CLIENT_SECRET ?? '',
+    },
     fcm: {
       projectId: process.env.NUXT_FCM_PROJECT_ID ?? '',
       privateKeyId: process.env.NUXT_FCM_PRIVATE_KEY_ID ?? '',

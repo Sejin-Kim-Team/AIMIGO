@@ -19,7 +19,7 @@ const { signIn } = useAuth()
         로그인/회원가입
       </div>
       <div class="flex flex-col justify-center h-full">
-        <KButton class="btn-outline" @click="signIn('google', { callbackUrl: '/' })">
+        <KButton class="btn-outline" @click="signIn('kakao')">
           <Icon name="logos:google-icon" size="28" />
           아이디로 로그인
         </KButton>

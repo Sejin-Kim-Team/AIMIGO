@@ -4,7 +4,6 @@ import Avatar02 from '~/assets/images/avatar-02.png'
 import { useElementHover } from '#imports'
 import { HEART_CHARGING, HEART_FULL, HEART_ZERO } from '~/constants/icon.constants'
 import type { User } from '~/server/types/types'
-import { StatusCode } from '~/server/types/types'
 
 const { status, signOut, getSession } = useAuth()
 const iconRef = ref<HTMLElement>()
@@ -25,7 +24,7 @@ const computedHeart = computed(() => {
 async function getUser() {
   const session = await getSession()
   if (!session)
-    return getErrorResponse(StatusCode.FORBIDDEN, 'Unauthenticated')
+    throw new Error('Unauthenticated')
 
   const email = session.user?.email ?? ''
   const { data } = await useFetch('/api/users', {
@@ -36,7 +35,7 @@ async function getUser() {
   thisUser.value = data.value?.body ?? null
 
   if (!thisUser.value)
-    return getErrorResponse(StatusCode.NOT_FOUND, 'Unauthenticated')
+    throw new Error('User not found')
 
   heart.value = thisUser.value.remainedHeart ?? 0
   if (heart.value > 5)

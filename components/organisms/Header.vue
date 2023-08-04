@@ -42,9 +42,9 @@ async function getUser() {
     throw new Error('User not found')
 
   heart.value = thisUser.value.remainedHeart ?? 0
-  if (heart.value > 5)
-    heart.value = 5
-  // TODO: 실제로 5개로 update 로직 필요.
+  if (heart.value > HEART_MAX)
+    heart.value = HEART_MAX
+  // TODO: 실제로 update 로직 필요.
 }
 
 onMounted(() => {

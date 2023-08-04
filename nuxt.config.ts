@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+console.log('origin', process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://aimigo.eggp.io')
 export default defineNuxtConfig({
   app: {
     head: {
@@ -14,6 +16,9 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     '@pinia/nuxt',
     '@nuxt/content',
+  ],
+  buildModules: [
+    '@nuxtjs/pwa',
   ],
   content: {
     // https://content.nuxtjs.org/api/configuration
@@ -54,6 +59,7 @@ export default defineNuxtConfig({
     auth: {
       clientId: process.env.NUXT_AUTH_CLIENT_ID ?? '',
       clientSecret: process.env.NUXT_AUTH_CLIENT_SECRET ?? '',
+      secret: process.env.NUXT_AUTH_SECRET ?? '',
     },
     kakao: {
       clientId: process.env.NUXT_KAKAO_CLIENT_ID ?? '',

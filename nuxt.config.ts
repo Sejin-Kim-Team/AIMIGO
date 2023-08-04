@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     '~/assets/styles/main.scss',
   ],
   auth: {
-    origin: process.env.NODE_ENV === 'development' ? 'https://aimigo.eggp.io' : 'https://aimigo.eggp.io',
+    origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://aimigo.eggp.io',
     provider: {
       type: 'authjs',
     },

@@ -7,6 +7,7 @@ export default defineNuxtConfig({
       title: 'AIMIGO!',
     },
   },
+  pageTransition: { name: 'page', mode: 'out-in' },
   modules: [
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',

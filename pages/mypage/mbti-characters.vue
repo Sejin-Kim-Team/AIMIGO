@@ -17,7 +17,7 @@ async function onClickSubmit() {
 </script>
 
 <template>
-  <main>
+  <main class="mb-8">
     <div class="mb-8 w-full h-[68px] pb-2 flex items-end justify-between align-baseline sticky top-[-1px] z-10 bg-base-100" style="vertical-align: baseline;">
       <span class="text-xl content-baseline text-gray-400">당신의 AIMIGO 를 골라주세요!</span>
       <div v-if="selected" class="flex justify-end">
@@ -26,6 +26,7 @@ async function onClickSubmit() {
         </KButton>
       </div>
     </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div v-for="(mbti, index) in items" :key="index">
         <div class="character" @click="onClickCharacter(mbti)">

@@ -74,11 +74,10 @@ export function useFirebase() {
       messagingRef.value = null
       requestTokenRef.value = null
     })
-
-    return {
-      firebaseApp,
-      messaging: messagingRef,
-      requestToken: requestTokenRef,
-    }
+  }
+  return {
+    firebaseApp,
+    messaging: messagingRef,
+    requestToken: requestTokenRef,
   }
 }

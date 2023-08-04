@@ -15,12 +15,12 @@ export default NuxtAuthHandler({
     GoogleProvider.default({
       clientId,
       clientSecret,
-      // authorization: {
-      //   params: {
-      //     scope: 'openid email profile https://www.googleapis.com/auth/cloud-platform',
-      //     access_type: 'offline',
-      //   },
-      // },
+      authorization: {
+        params: {
+          scope: 'openid email profile https://www.googleapis.com/auth/cloud-platform',
+          access_type: 'offline',
+        },
+      },
       // authorizationUrl: 'https://accounts.google.com/o/oauth2/auth?prompt=consent&response_type=code',
       // accessTokenUrl: 'https://oauth2.googleapis.com/token',
     }),

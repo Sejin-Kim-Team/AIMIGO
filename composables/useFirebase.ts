@@ -1,6 +1,9 @@
 import { initializeApp } from 'firebase/app'
 import type { Messaging } from 'firebase/messaging'
 
+import { getMessaging, getToken, onMessage } from 'firebase/messaging'
+import { tryOnBeforeUnmount } from '@vueuse/shared'
+
 export function useFirebase() {
   const firebaseConfig = {
     apiKey: 'AIzaSyB0weP8vq3C9GBgRVUnkQYkBwXWY_HOr7I',
@@ -12,7 +15,7 @@ export function useFirebase() {
     measurementId: 'G-QMTN7RC4YM',
   }
   const firebaseApp = initializeApp(firebaseConfig)
-  const messagingRef = ref<Messaging | null>(null)
+  const messagingRef = shallowRef<Messaging | null>(null)
   const requestTokenRef = ref<string | null>(null)
 
   async function requestPermission() {
@@ -41,9 +44,15 @@ export function useFirebase() {
 
     onMessage(messagingRef.value, (payload) => {
       console.log('Message received. ', payload)
-      // ...
     })
   }
+
+  tryOnMounted(() => tryRequestToken())
+
+  tryOnBeforeUnmount(() => {
+    messagingRef.value = null
+    requestTokenRef.value = null
+  })
 
   return {
     firebaseApp,

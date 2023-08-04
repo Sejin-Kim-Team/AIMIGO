@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+console.log('origin', process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://aimigo.eggp.io')
 export default defineNuxtConfig({
   app: {
     head: {

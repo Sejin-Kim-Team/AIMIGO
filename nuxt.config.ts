@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/content',
   ],
+  buildModules: [
+    '@nuxtjs/pwa',
+  ],
   content: {
     // https://content.nuxtjs.org/api/configuration
   },

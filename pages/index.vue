@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { tryOnMounted } from '@vueuse/shared'
+import { useFirebase } from '~/composables/useFirebase'
+
 definePageMeta({
   name: 'Introduce',
   layout: 'sessionless',
@@ -7,6 +10,14 @@ definePageMeta({
 
 const { data } = await useFetch('/api/_content/query')
 const doc = (data.value as any)[0]
+
+const { requestToken, tryRequestToken } = useFirebase()
+
+watchEffect(() => {
+  console.log('fucking', toRaw(requestToken.value))
+})
+
+tryOnMounted(() => tryRequestToken())
 </script>
 
 <template>

@@ -60,6 +60,10 @@ getUser()
 
 async function onSaveMyPage() {
   // users/push
+
+  if (pushEnabled.value)
+    requestPermission()
+
   await useFetch('/api/users/push', {
     params: { id: thisUser.value?.id },
     method: 'PUT',

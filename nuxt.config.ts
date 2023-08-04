@@ -18,6 +18,14 @@ export default defineNuxtConfig({
   css: [
     '~/assets/styles/main.scss',
   ],
+  auth: {
+    provider: {
+      type: 'authjs',
+    },
+    globalAppMiddleware: {
+      isEnabled: true,
+    },
+  },
   tailwindcss: {
     // Options
   },

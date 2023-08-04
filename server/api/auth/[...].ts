@@ -5,12 +5,11 @@ import { NuxtAuthHandler } from '#auth'
 const config = useRuntimeConfig()
 const { clientId, clientSecret } = config.auth
 
-console.log({ clientId, clientSecret })
-
 export default NuxtAuthHandler({
   pages: {
     signIn: '/login',
   },
+  secret: clientSecret ?? 'test-123',
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GoogleProvider.default({

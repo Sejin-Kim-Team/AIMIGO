@@ -129,7 +129,7 @@ async function onSaveMyPage() {
     </div>
   </div>
   <div class="flex justify-end gap-4">
-    <KButton @click="navigateTo('/')">
+    <KButton @click="navigateTo('/chat')">
       돌아가기
     </KButton>
     <KButton brand="primary" @click="onSaveMyPage">

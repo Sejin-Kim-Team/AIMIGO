@@ -4,6 +4,7 @@ import Avatar02 from '~/assets/images/avatar-02.png'
 import { useElementHover } from '#imports'
 import { HEART_CHARGING, HEART_FULL, HEART_ZERO } from '~/constants/icon.constants'
 import type { User } from '~/server/types/types'
+import { HEART_MAX } from '~/constants/heart.constants'
 
 const { status, signOut, getSession } = useAuth()
 const iconRef = ref<HTMLElement>()
@@ -14,7 +15,7 @@ const thisUser = ref<User | null>(null)
 const heart = ref<number>(5)
 
 const computedHeart = computed(() => {
-  if (heart.value === 20)
+  if (heart.value === HEART_MAX)
     return HEART_FULL
   else if (heart.value === 0)
     return HEART_ZERO
@@ -41,9 +42,9 @@ async function getUser() {
     throw new Error('User not found')
 
   heart.value = thisUser.value.remainedHeart ?? 0
-  if (heart.value > 20)
-    heart.value = 20
-  // TODO: 실제로 5개로 update 로직 필요.
+  if (heart.value > HEART_MAX)
+    heart.value = HEART_MAX
+  // TODO: 실제로 update 로직 필요.
 }
 
 onMounted(() => {

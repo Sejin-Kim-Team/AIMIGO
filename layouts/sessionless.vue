@@ -3,7 +3,7 @@ import Footer from '~/components/organisms/Footer.vue'
 </script>
 
 <template>
-  <div id="app">
+  <div>
     <div class="main-wrapper">
       <NuxtPage class="h-full" />
     </div>

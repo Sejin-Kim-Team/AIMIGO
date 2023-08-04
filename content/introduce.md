@@ -6,7 +6,7 @@ AIMIGO! [발음 : 아이미고] 는 AI 와 스페인어로 친구를 뜻하는 A
 MBTI 기반 성격 특성을 바탕으로 사용자가 원하는 공감 방향으로 대화를 할 수 있는 가상친구 서비스입니다.
 
 ## Point! 핵심 컨셉
-![introduce.png](..%2Fpublic%2Fintroduce.png)
+![introduce.png](https://aimigo.eggp.io/introduce.png)
 
 ### Fit한, 능동적인 친구
 

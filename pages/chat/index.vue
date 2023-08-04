@@ -8,6 +8,7 @@ import Typing from '~/components/atoms/Typing.vue'
 import type { AvatarOption } from '~/types/widget.types'
 import { PlaygroundAvatar } from '~/constants/charactor.constants'
 import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
+import type { Aimigo } from '~/constants/characters.constants'
 
 definePageMeta({
   name: 'Chat',
@@ -23,6 +24,7 @@ interface Chat {
 const { status, getSession } = useAuth()
 
 const session = await getSession()
+const aimigo = ref<Aimigo | null>(null)
 
 const loading = ref<boolean>(false)
 const message = ref<string>('')
@@ -75,8 +77,8 @@ async function requestMessage(message: string) {
       method: 'post',
       body: {
         message,
-        name: 'Sejin Kim',
-        mbti: 'INFP',
+        name: aimigo.value!.name,
+        mbti: `${aimigo.value!.type}`,
       },
     }),
     useFetch<{
@@ -97,7 +99,7 @@ async function requestMessage(message: string) {
     return
 
   const chat: Chat = {
-    sender: 'Sejin Kim',
+    sender: aimigo.value!.name,
     time: new Date().toISOString(),
     message: data.value.body,
   }
@@ -117,12 +119,17 @@ async function requestMessage(message: string) {
 const { user } = await getSession()
 const sessionUserInfo = computed(() => user)
 
-// TODO: aimigo 정보가 없으면 생성 페이지로 이동
+tryOnMounted(() => {
+  aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
+  console.log('fucking', aimigo.value)
+  if (aimigo.value === null)
+    navigateTo('/mypage/mbti-characters')
+})
 </script>
 
 <template>
   <article>
-    <div class="grid grid-cols-6 md:gap-8 gap-4 h-full">
+    <div v-if="aimigo" class="grid grid-cols-6 md:gap-8 gap-4 h-full">
       <!-- Avatar Layer -->
       <div class="md:col-span-2 col-span-6">
         <div class="card w-full bg-base-200 shadow-xl">
@@ -133,14 +140,14 @@ const sessionUserInfo = computed(() => user)
           </div>
           <figure class="px-10 pt-10">
             <KAvatar
-              :avatar="character"
+              :avatar="aimigo.avatar"
               :current-index="currentIndex"
               :emotion="emotion"
             />
           </figure>
           <div class="card-body items-center text-center">
             <h2 class="card-title">
-              AIMIGO
+              {{ aimigo.name }}
             </h2>
           </div>
         </div>

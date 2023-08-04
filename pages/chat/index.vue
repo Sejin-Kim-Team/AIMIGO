@@ -40,21 +40,21 @@ const { focused: inputFocused } = useFocus(inputRef)
 const senderId = ref(session.user!.name as string)
 
 async function handleSubmit() {
+  const _message = `${message.value}`
+  message.value = ''
+
   const chat: Chat = {
     sender: senderId.value,
     time: new Date().toISOString(),
-    message: message.value,
+    message: _message,
   }
-
-  message.value = ''
 
   chats.value.push(chat)
 
   loading.value = true
-  await requestMessage(message.value)
+  await requestMessage(_message)
   loading.value = false
 
-  message.value = ''
   inputFocused.value = true
 }
 

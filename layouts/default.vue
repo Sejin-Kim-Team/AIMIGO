@@ -5,7 +5,9 @@ import Footer from '~/components/organisms/Footer.vue'
 
 <template>
   <div id="app">
-    <Header />
+    <ClientOnly>
+      <Header />
+    </ClientOnly>
     <main>
       <NuxtPage class="h-full" />
     </main>

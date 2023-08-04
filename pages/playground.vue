@@ -54,13 +54,15 @@ async function handleRestart() {
     />
 
     <div class="mt-4">
-      <Typing
-        class="badge badge-primary"
-        :items="texts"
-        :type-speed="66"
-        @typing="handleTyping"
-        @typed="handledTyped"
-      />
+      <ClientOnly>
+        <Typing
+          class="badge badge-primary"
+          :items="texts"
+          :type-speed="66"
+          @typing="handleTyping"
+          @typed="handledTyped"
+        />
+      </ClientOnly>
     </div>
   </div>
 </template>

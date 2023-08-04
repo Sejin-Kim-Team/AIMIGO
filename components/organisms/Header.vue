@@ -22,6 +22,9 @@ const computedHeart = computed(() => {
 })
 
 async function getUser() {
+  if (!window)
+    return
+
   const session = await getSession()
   if (!session)
     throw new Error('Unauthenticated')

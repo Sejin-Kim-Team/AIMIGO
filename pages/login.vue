@@ -4,9 +4,9 @@ import KButton from '~/components/atoms/KButton.vue'
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
-    navigateAuthenticatedTo: '/',
+    navigateAuthenticatedTo: '/chat',
   },
-  layout: 'login',
+  layout: 'sessionless',
 })
 
 const { signIn } = useAuth()

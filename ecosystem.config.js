@@ -4,8 +4,8 @@ module.exports = {
       name: 'AIMIGO!',
       exec_mode: 'cluster',
       instances: 1,
-      script: 'pnpm',
-      args: 'dlx nuxi start',
+      script: 'pnpm dlx',
+      args: 'nuxi start',
     },
   ],
 }

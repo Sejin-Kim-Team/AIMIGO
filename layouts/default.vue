@@ -4,7 +4,7 @@ import Footer from '~/components/organisms/Footer.vue'
 </script>
 
 <template>
-  <div id="app">
+  <div>
     <ClientOnly>
       <Header />
     </ClientOnly>

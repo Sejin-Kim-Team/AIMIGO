@@ -82,7 +82,7 @@ onMounted(() => {
       </div>
       <div class="navbar-end">
         <div class="btn btn-ghost">
-          <Icon :name="computedHeart" :size="24" /> {{ heart }}
+          <Icon :name="computedHeart" size="24" /> {{ heart }}
         </div>
       </div>
     </nav>

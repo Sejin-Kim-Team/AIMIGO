@@ -5,6 +5,8 @@ import { NuxtAuthHandler } from '#auth'
 const config = useRuntimeConfig()
 const { clientId, clientSecret } = config.auth
 
+console.log({ clientId, clientSecret })
+
 export default NuxtAuthHandler({
   pages: {
     signIn: '/login',

@@ -4,10 +4,12 @@ import type { User } from '~/server/types/types'
 
 const { getSession } = useAuth()
 const myName = ref<string>('')
+const pushToken = ref<string>('')
 const pushEnabled = ref<boolean>(false)
 const startTime = ref<number>(9)
 const endTime = ref<number>(18)
 const thisUser = ref<User | null>(null)
+const { requestToken } = useFirebase()
 
 function onChangeMyName(e: Event) {
   const target = e.target as HTMLInputElement
@@ -51,6 +53,7 @@ async function getUser() {
   thisUser.value = data.value?.body ?? null
 
   myName.value = thisUser.value?.name ?? ''
+  pushToken.value = thisUser.value?.pushToken ?? ''
   pushEnabled.value = thisUser.value?.pushEnabled ?? false
   startTime.value = thisUser.value?.pushPermitStartTime ?? 9
   endTime.value = thisUser.value?.pushPermitEndTime ?? 18
@@ -60,17 +63,19 @@ getUser()
 
 async function onSaveMyPage() {
   // users/push
-
-  if (pushEnabled.value)
-    requestPermission()
+  let token = ''
+  if (pushEnabled.value && pushToken.value === '') {
+    token = toRaw(await requestToken.value) ?? ''
+    console.log('Token is : ', token)
+  }
 
   await useFetch('/api/users/push', {
     params: { id: thisUser.value?.id },
     method: 'PUT',
     body: {
       name: myName.value,
+      pushToken: token,
       pushEnabled: pushEnabled.value,
-      pushToken: '', // TODO: pushToken
       pushPermitStartTime: startTime.value,
       pushPermitEndTime: endTime.value,
     },

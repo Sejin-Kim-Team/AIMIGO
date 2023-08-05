@@ -28,11 +28,11 @@ async function onClickSubmit() {
   localStorage.setItem('aimigo-recent-date', '')
 
   if (error.value) {
-    snackbar.error('저장에 실패했습니다 🥲')
+    alert('저장에 실패했습니다 🥲')
     return
   }
 
-  snackbar.success('저장되었습니다 🎉')
+  alert('저장되었습니다 🎉')
 
   navigateTo('/chat')
 }

@@ -10,7 +10,6 @@ import KChat from '~/components/molecules/Chat/KChat.vue'
 import Typing from '~/components/atoms/Typing.vue'
 import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 import { useAimigoStore } from '~/store/aimigo.store'
-import { useKSnackbar } from '~/composables/useKSnackbar'
 
 definePageMeta({
   name: 'Chat',
@@ -32,7 +31,6 @@ const {
   user,
 } = storeToRefs(aimigoStore)
 
-const snackbar = useKSnackbar()
 const message = ref<string>('')
 const currentIndex = ref<number>(0)
 const loading = ref<boolean>(false)
@@ -43,7 +41,7 @@ const aimigoSize = computed(() => smallerThanLg.value ? 100 : 280)
 
 async function handleSubmit() {
   if (heart.value < 0)
-    return snackbar.error('하트가 부족합니다 🥲')
+    return alert('하트가 부족합니다 🥲')
 
   if (!message.value)
     return
@@ -152,7 +150,7 @@ tryOnMounted(async () => {
         </KChatWrapper>
 
         <form
-          class="sticky bottom-0 left-0 w-full bg-base-200 shadow-xl rounded-box p-4 flex gap-4"
+          class="sticky bottom-0 left-0 mb-4 w-full bg-base-200 shadow-xl rounded-box p-4 flex gap-4"
           @submit.prevent="handleSubmit"
         >
           <div class="join w-full">
@@ -189,7 +187,7 @@ article {
 }
 
 .chat-wrapper {
-  height: calc(100vh - 160px);
+  height: calc(100vh - 40px);
   overflow-y: scroll;
 }
 </style>

@@ -18,7 +18,7 @@ defineExpose({
 
 <template>
   <div ref="el" class="chat-wrapper">
-    <div class="card-body">
+    <div class="lg:p-8 p-3">
       <slot />
     </div>
   </div>

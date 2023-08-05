@@ -4,7 +4,7 @@ import Footer from '~/components/organisms/Footer.vue'
 </script>
 
 <template>
-  <div>
+  <div class="app">
     <Header />
 
     <main>
@@ -19,5 +19,9 @@ import Footer from '~/components/organisms/Footer.vue'
 main {
   @apply container mx-auto max-w-3xl md:max-w-6xl px-6 mt-2 relative h-full;
   min-height: calc(100vh + 64px);
+}
+
+.app {
+  min-width: 320px;
 }
 </style>

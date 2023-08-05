@@ -18,7 +18,7 @@ function onClickSubmit() {
 
   localStorage.setItem('aimigo', JSON.stringify(toRaw(aimigo.value)))
 
-  await useFetch('/api/users/aimigo', {
+  useFetch('/api/users/aimigo', {
     method: 'PUT',
     body: {
       aimigoMbti: aimigo.value?.type,

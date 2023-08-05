@@ -1,7 +1,7 @@
-import type { BaseChatMemory } from 'langchain/dist/memory/chat_memory'
-import { ConversationSummaryMemory } from 'langchain/memory'
-import { OpenAI } from 'langchain/llms/openai'
 import { LLMChain, PromptTemplate } from 'langchain'
+import type { BaseChatMemory } from 'langchain/dist/memory/chat_memory'
+import { OpenAI } from 'langchain/llms/openai'
+import { ConversationSummaryMemory } from 'langchain/memory'
 import { MbtiTemplates } from '~/constants/mbti.constants'
 import type { MBTI } from '~/types/chat.type'
 
@@ -67,8 +67,6 @@ export class ChatClient {
         AI is ${params.aimigoName}. Human is ${params.userName}.
         Don't put the AI's MBTI type in your answer. 
         Please answer like a really close friend. 
-        If someone speaks short talk, answer every sentence short talk. 
-        Exclude the AI's name from the response.
         AI follows the rules of Settings.
         
         Settings:
@@ -76,9 +74,14 @@ export class ChatClient {
         Human Name: ${params.userName}
         AI's MBTI: ${params.mbti}
         Rules: ${this.descriptions.map((x, index) => `- ${index + 1}: ${x}`).join('\n')}
-        Current conversation:
+        - AI 가 먼저 주제를 정하고 대화를 해줘.
+        - 반말로 말을 걸면, 반말로 대답해줘.
+        - 세문장 이상 넘어가지 않게 대답해줘.
+        - AI MBTI 성격 특성을 고려해서 대답해줘.
+        - AI는 정말 친한 친구로서 대답해야 해.
+        Conversation History:
         {chat_history}
-        + {input}`,
+        Human says: {input}`,
         partialVariables as Record<string, any>)
 
     const chain = new LLMChain({ llm: model, prompt, memory })
@@ -87,6 +90,7 @@ export class ChatClient {
 
     console.log({ text, memory: await memory.loadMemoryVariables({}) })
 
-    return text
+    const conversations = text.split(':')
+    return conversations[conversations.length - 1]
   }
 }

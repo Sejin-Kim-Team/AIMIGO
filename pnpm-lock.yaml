@@ -73,6 +73,9 @@ devDependencies:
   nuxt:
     specifier: ^3.6.5
     version: 3.6.5(@types/node@18.17.0)(eslint@8.45.0)(sass@1.64.1)(typescript@5.1.6)
+  nuxt-gtag:
+    specifier: ^0.5.7
+    version: 0.5.7
   nuxt-scheduler:
     specifier: ^0.0.16
     version: 0.0.16
@@ -356,7 +359,7 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
       debug: 4.3.4
       lodash.debounce: 4.0.8
-      resolve: 1.22.2
+      resolve: 1.22.3
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6670,7 +6673,7 @@ packages:
     dependencies:
       debug: 3.2.7
       is-core-module: 2.12.1
-      resolve: 1.22.2
+      resolve: 1.22.3
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10960,6 +10963,17 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
+  /nuxt-gtag@0.5.7:
+    resolution: {integrity: sha512-Q6NRndEJ0phEfKdS4uLy3hpVBkgWGnG5KJ2dhVyCmbLXcfakkmf19f2WJ5uM2yUOg8rAkYgDjRb9XyAfE+okuA==}
+    dependencies:
+      '@nuxt/kit': 3.6.5
+      defu: 6.1.2
+      pathe: 1.1.1
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: true
+
   /nuxt-icon@0.4.2(vue@3.3.4):
     resolution: {integrity: sha512-yFpvDA+FuUz+ixtt1eRzctTfR4sl7egZoXu7LL+CUc42qFlzCMaTZJ9eqFR2FTW8zu9tfLIZ83RJmUa1jNEWgg==}
     dependencies:
@@ -12740,7 +12754,6 @@ packages:
       is-core-module: 2.12.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
-    dev: true
 
   /restore-cursor@3.1.0:
     resolution: {integrity: sha512-l+sSefzHpj5qimhFSE5a8nufZYAM3sBSVMAPtYkmC+4EH2anSGaEMXSD0izRQbu9nfyQ9y5JrVmp7E8oZrUjvA==}
@@ -14122,7 +14135,7 @@ packages:
     dev: true
 
   /utils-merge@1.0.1:
-    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
+    resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
     dev: false
 

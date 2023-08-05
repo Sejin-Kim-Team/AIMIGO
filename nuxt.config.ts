@@ -19,12 +19,16 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     '@pinia/nuxt',
     '@nuxt/content',
+    'nuxt-gtag',
   ],
   buildModules: [
     '@nuxtjs/pwa',
   ],
   content: {
     // https://content.nuxtjs.org/api/configuration
+  },
+  gtag: {
+    id: 'G-89F7R5TZFT',
   },
   css: [
     '~/assets/styles/main.scss',

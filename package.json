@@ -18,6 +18,7 @@
     "@types/node": "^18.17.0",
     "eslint": "^8.45.0",
     "nuxt": "^3.6.5",
+    "nuxt-gtag": "^0.5.7",
     "nuxt-scheduler": "^0.0.16",
     "openai": "^3.3.0",
     "prisma": "^5.0.0",

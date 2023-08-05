@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
+  spaLoadingTemplate: false,
   pageTransition: { name: 'page', mode: 'out-in' },
   modules: [
     '@nuxtjs/tailwindcss',

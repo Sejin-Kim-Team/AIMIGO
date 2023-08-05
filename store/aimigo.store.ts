@@ -58,7 +58,7 @@ export const useAimigoStore = defineStore('aimigo', () => {
 
   const senderId = computed<string | null>(() => session.value?.user?.name ?? null)
 
-  async function sendMessage(message: string) {
+  async function sendMessage(message: string, beforeSendCallback?: () => void) {
     if (!senderId.value)
       throw new Error('Sender ID is not defined')
 
@@ -69,6 +69,7 @@ export const useAimigoStore = defineStore('aimigo', () => {
     }
 
     chats.value.push(chat)
+    beforeSendCallback && beforeSendCallback()
     const aimigoChat = await callAPI(chat.message)
     chats.value.push(aimigoChat)
   }
@@ -104,7 +105,7 @@ export const useAimigoStore = defineStore('aimigo', () => {
     const session = await getSession()
 
     if (!session)
-      throw new Error('fucking Unauthenticated')
+      throw new Error('Unauthenticated')
 
     if (!session.user)
       throw new Error('User is not defined')

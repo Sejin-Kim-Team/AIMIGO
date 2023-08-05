@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { debouncedWatch } from '@vueuse/shared'
 import KChatWrapper from '~/components/molecules/Chat/KChatWrapper.vue'
 import KInput from '~/components/atoms/KInput.vue'
 import KButton from '~/components/atoms/KButton.vue'
@@ -23,6 +24,7 @@ const {
   senderId,
   emotion,
   heart,
+  user,
 } = storeToRefs(aimigoStore)
 
 const snackbar = useKSnackbar()
@@ -30,7 +32,7 @@ const message = ref<string>('')
 const currentIndex = ref<number>(0)
 const loading = ref<boolean>(false)
 
-const chatRef = ref<HTMLDivElement>()
+const chatRef = ref<{ scrollBottom: () => void } | null>()
 const inputRef = ref<HTMLInputElement>()
 
 async function handleSubmit() {
@@ -44,7 +46,10 @@ async function handleSubmit() {
   message.value = ''
 
   loading.value = true
-  await aimigoStore.sendMessage(_message)
+  await aimigoStore.sendMessage(_message, async () => {
+    await nextTick()
+    chatRef.value?.scrollBottom()
+  })
   loading.value = false
 }
 
@@ -56,9 +61,28 @@ function handleTyped() {
   currentIndex.value = 0
 }
 
-tryOnMounted(() => {
+debouncedWatch(currentIndex, () => {
+  chatRef.value?.scrollBottom()
+}, { debounce: 100, maxWait: 200 })
+
+tryOnMounted(async () => {
+  await nextTick()
   if (aimigo.value === null)
     navigateTo('/mypage/mbti-characters')
+
+  const recentDate = localStorage.getItem('aimigo-recent-date') ?? null
+  let message = `안녕 ${user.value?.name ?? ''}! 반가워, 나는 ${aimigo.value.name} 이라고해! 잘부탁해 😉`
+
+  if (recentDate) {
+    message = `${user.value?.name ?? ''} 오랜만이네! 요즘 어떻게 지내? 😙`
+    localStorage.setItem('aimigo-recent-date', new Date().toLocaleTimeString())
+  }
+
+  chats.value = [{
+    sender: aimigo.value.name,
+    time: new Date().toLocaleTimeString(),
+    message,
+  }]
 })
 </script>
 
@@ -69,8 +93,8 @@ tryOnMounted(() => {
       <div class="md:col-span-2 col-span-6">
         <div class="card w-full bg-base-200 shadow-xl">
           <div class="flex justify-end">
-            <KButton @click="navigateTo('/mypage/mbti-characters')">
-              <Icon :name="SETTING" />
+            <KButton class="btn-ghost text-primary" @click="navigateTo('/mypage/mbti-characters')">
+              <Icon size="24" :name="SETTING" />
             </KButton>
           </div>
           <figure class="px-10 pt-10">
@@ -90,7 +114,10 @@ tryOnMounted(() => {
 
       <!-- Chat Layer -->
       <div class="md:col-span-4 col-span-6 h-full relative">
-        <KChatWrapper ref="chatRef" class="chat-wrapper mb-4">
+        <KChatWrapper
+          ref="chatRef"
+          class="chat-wrapper mb-4"
+        >
           <template v-for="(chat, index) in chats" :key="index">
             <KChat
               :sender="chat.sender"
@@ -101,7 +128,7 @@ tryOnMounted(() => {
                 <ClientOnly>
                   <Typing
                     :items="[chat.message]"
-                    :type-speed="60"
+                    :type-speed="33"
                     @typing="handleTyping"
                     @typed="handleTyped"
                   />

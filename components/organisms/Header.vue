@@ -57,7 +57,7 @@ tryOnMounted(() => aimigoStore.fetchUser())
       </div>
       <div class="navbar-end">
         <div class="btn btn-ghost">
-          <Icon :name="computedHeart" size="24" /> {{ heart }}
+          <Icon :name="computedHeart" size="28" /> {{ heart }}
         </div>
       </div>
     </nav>

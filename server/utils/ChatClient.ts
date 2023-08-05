@@ -31,7 +31,7 @@ export class ChatClient {
     return ChatClient.client
   }
 
-  private initializeUserMemory(userId: string) {
+  public initializeUserMemory(userId: string) {
     this.memory.set(userId, new ConversationSummaryMemory({
       memoryKey: 'chat_history',
       llm: new OpenAI({ modelName: 'gpt-3.5-turbo', temperature: 0, openAIApiKey: this.apiKey }),
@@ -65,17 +65,20 @@ export class ChatClient {
         The AI has a good memory and can remember things you said earlier in the conversation.
         Also, the AI has its own personality, which affects its behavior.
         AI is ${params.aimigoName}. Human is ${params.userName}.
+        Don't put the AI's MBTI type in your answer. 
+        Please answer like a really close friend. 
+        If someone speaks short talk, answer every sentence short talk. 
+        Exclude the AI's name from the response.
         AI follows the rules of Settings.
         
         Settings:
-        AI: ${params.aimigoName}
-        Human: ${params.userName}
-        MBTI: ${params.mbti}
+        AI Name: ${params.aimigoName}
+        Human Name: ${params.userName}
+        AI's MBTI: ${params.mbti}
         Rules: ${this.descriptions.map((x, index) => `- ${index + 1}: ${x}`).join('\n')}
         Current conversation:
         {chat_history}
-        + {input}
-        정말로 친한 친구처럼 대답해준다. 반말로 질문이 들어오면 반말로 대답한다.`,
+        + {input}`,
         partialVariables as Record<string, any>)
 
     const chain = new LLMChain({ llm: model, prompt, memory })

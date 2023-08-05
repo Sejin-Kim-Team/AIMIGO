@@ -47,9 +47,7 @@ async function getUser() {
   // TODO: 실제로 update 로직 필요.
 }
 
-onMounted(() => {
-  getUser()
-})
+tryOnMounted(() => getUser())
 </script>
 
 <template>
@@ -69,7 +67,7 @@ onMounted(() => {
               <a>마이페이지</a>
             </li>
 
-            <li @click="signOut({ callbackUrl: '/login' })">
+            <li @click="signOut({ callbackUrl: '/' })">
               <a>로그아웃</a>
             </li>
           </ul>

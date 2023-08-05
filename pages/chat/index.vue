@@ -116,6 +116,9 @@ const { user } = await getSession()
 const sessionUserInfo = computed(() => user)
 
 tryOnMounted(() => {
+  if (!window)
+    return
+
   aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
   if (aimigo.value === null)
     navigateTo('/mypage/mbti-characters')

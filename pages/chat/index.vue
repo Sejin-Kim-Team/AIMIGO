@@ -127,8 +127,8 @@ tryOnMounted(() => {
               class="w-full join-item"
             />
 
-            <KButton class="join-item rounded-r-full" type="submit" :disabled="loading || heart === 0">
-              <Icon :name="loading ? CHAT_MESSAGE_SENDING : SEND_MESSAGE" />
+            <KButton class="join-item rounded-r-full btn-primary" type="submit" :disabled="loading || heart === 0">
+              <Icon size="28" :name="loading ? CHAT_MESSAGE_SENDING : SEND_MESSAGE" />
             </KButton>
           </div>
         </form>

@@ -36,7 +36,7 @@ tryOnMounted(() => aimigoStore.fetchUser())
           </label>
           <ul v-if="status === 'authenticated' && user" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
             <li class="p-4 text-lg">
-              반가워요, {{ user.name }}!
+              반가워요, {{ user.name }} 😚
             </li>
 
             <li @click="navigateTo('/mypage')">

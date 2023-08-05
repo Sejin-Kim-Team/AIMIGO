@@ -2,8 +2,6 @@
 // import LogRocket from 'logrocket'
 //
 // LogRocket.init('gpgrhj/aimigo')
-
-const { firebaseApp } = useFirebase()
 </script>
 
 <template>

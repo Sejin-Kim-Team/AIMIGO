@@ -79,9 +79,11 @@ export class ChatClient {
         - 세문장 이상 넘어가지 않게 대답해줘.
         - AI MBTI 성격 특성을 고려해서 대답해줘.
         - AI는 정말 친한 친구로서 대답해야 해.
+        - OUTPUT 에 들어갈 말을 한국어 응답으로 줘.
         Conversation History:
         {chat_history}
-        Human says: {input}`,
+        Human says: {input}
+        AI says: OUTPUT`,
         partialVariables as Record<string, any>)
 
     const chain = new LLMChain({ llm: model, prompt, memory })
@@ -90,7 +92,6 @@ export class ChatClient {
 
     console.log({ text, memory: await memory.loadMemoryVariables({}) })
 
-    const conversations = text.split(':')
-    return conversations[conversations.length - 1]
+    return text
   }
 }

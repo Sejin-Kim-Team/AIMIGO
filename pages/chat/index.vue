@@ -55,6 +55,11 @@ function handleTyping() {
 function handleTyped() {
   currentIndex.value = 0
 }
+
+tryOnMounted(() => {
+  if (aimigo.value === null)
+    navigateTo('/mypage/mbti-characters')
+})
 </script>
 
 <template>
@@ -133,7 +138,7 @@ function handleTyped() {
 
 <style scoped>
 article {
-  position: relative;
+  @apply relative;
 }
 
 .chat-wrapper {

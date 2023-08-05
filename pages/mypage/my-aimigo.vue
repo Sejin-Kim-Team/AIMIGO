@@ -7,24 +7,30 @@ import { useAimigoStore } from '~/store/aimigo.store'
 
 const aimigoStore = useAimigoStore()
 const { aimigo } = storeToRefs(aimigoStore)
+const snackbar = useKSnackbar()
 
 const name = ref(aimigo.value.name ?? 'AIMIGO')
 
-function onClickSubmit() {
+async function onClickSubmit() {
   aimigo.value = {
     ...aimigo.value,
     name: name.value,
   }
 
-  localStorage.setItem('aimigo', JSON.stringify(toRaw(aimigo.value)))
-
-  useFetch('/api/users/aimigo', {
+  const { error } = await useFetch('/api/users/aimigo', {
     method: 'PUT',
     body: {
       aimigoMbti: aimigo.value?.type,
       aimigoName: aimigo.value?.name,
     },
   })
+
+  if (error.value) {
+    snackbar.error('저장에 실패했습니다 🥲')
+    return
+  }
+
+  snackbar.success('저장되었습니다 🎉')
 
   navigateTo('/chat')
 }

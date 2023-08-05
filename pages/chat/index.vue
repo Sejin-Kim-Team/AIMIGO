@@ -117,6 +117,7 @@ const sessionUserInfo = computed(() => user)
 
 tryOnMounted(() => {
   aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
+
   if (aimigo.value === null)
     navigateTo('/mypage/mbti-characters')
 })
@@ -129,7 +130,7 @@ tryOnMounted(() => {
       <div class="md:col-span-2 col-span-6">
         <div class="card w-full bg-base-200 shadow-xl">
           <div class="flex justify-end">
-            <KButton @click="navigateTo('/mypage/mbti-characters')">
+            <KButton @click="navigateTo('/mypage/mbt료i-characters')">
               <Icon :name="SETTING" />
             </KButton>
           </div>

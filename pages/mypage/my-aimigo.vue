@@ -19,6 +19,15 @@ async function onClickSubmit() {
   }
 
   localStorage.setItem('aimigo', JSON.stringify(toRaw(aimigo.value)))
+
+  await useFetch('/api/users/aimigo', {
+    method: 'PUT',
+    body: {
+      aimigoMbti: aimigo.value?.type,
+      aimigoName: aimigo.value?.name,
+    },
+  })
+
   await navigateTo('/chat')
 }
 </script>

@@ -23,17 +23,8 @@ export async function getUsersWherePushEnabled(time: number): Promise<User[]> {
     where: {
       pushEnabled: true,
       aimigoEnergy: { gte: 30 },
-      OR: [
-        {
-          pushPermitStartTime: { gte: time },
-          pushPermitEndTime: { lte: time },
-        }, {
-          pushPermitStartTime: time,
-        },
-        {
-          pushPermitEndTime: time,
-        },
-      ],
+      pushPermitStartTime: { lte: time },
+      pushPermitEndTime: { gte: time },
     },
   })
 }

@@ -1,12 +1,6 @@
-// Give the service worker access to Firebase Messaging.
-// Note that you can only use Firebase Messaging here. Other Firebase libraries
-// are not available in the service worker.
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js');
 
-// Initialize the Firebase app in the service worker by passing in
-// your app's Firebase config object.
-// https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
     apiKey: 'AIzaSyB0weP8vq3C9GBgRVUnkQYkBwXWY_HOr7I',
     authDomain: 'aimigo-83ddd.firebaseapp.com',
@@ -16,21 +10,35 @@ firebase.initializeApp({
     appId: '1:971619671165:web:e856f2035d1588d2de6514',
     measurementId: 'G-W8BBTDY1TD',
 });
+self.addEventListener('notificationclick', function (event) {
+    console.log('notification clicked', event);
+    event.notification.close();
+    event.waitUntil(
+        clients
+        .matchAll({
+            type: "window",
+        })
+        .then((clientList) => {
+            for (const client of clientList) {
+                if (client.url === "/chat" && "focus" in client) return client.focus();
+            }
+            if (clients.openWindow) return clients.openWindow("/chat");
+        }),
+    );
+})
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
 const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
     console.log(
         '[firebase-messaging-sw.js] Received background message ',
         payload
     );
-    // Customize notification here
-    const notificationTitle = payload.notification.title;
+    const notificationTitle = payload.data.title;
     const notificationOptions = {
-        body: payload.notification.body,
-        icon: '/favicon.ico'
+        body: payload.data.body,
+        icon: '/favicon.ico',
+        vibrate: [200, 100, 200, 100, 200, 100, 200],
     };
-
     self.registration.showNotification(notificationTitle, notificationOptions);
+
 });

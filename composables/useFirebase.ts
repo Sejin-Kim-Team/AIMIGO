@@ -39,21 +39,6 @@ export function useFirebase() {
     messagingRef.value = messaging
     onMessage(messagingRef.value, (payload) => {
       console.log('Message received. ', payload)
-      if (!payload || !payload.notification || !payload.notification.title || !payload.notification.body)
-        return
-      const notification = new Notification(payload.notification.title, {
-        body: payload.notification.body,
-        icon: '/favicon.ico',
-        vibrate: [200, 100, 200, 100, 200, 100, 200],
-      })
-
-      notification.onshow = () => {
-        console.log('Notification shown')
-      }
-
-      notification.onclick = () => {
-        notification.close()
-      }
     })
     const requestToken = await getToken(messaging, { vapidKey: 'BIUfNhBiY50v4ZzjRYOE4azoV7KAKpVtehBK0zAoXPvNsjD19m-C32CD_9H02DUlrIwAiz404-qLxcsAwbS3nI8' })
     requestTokenRef.value = requestToken

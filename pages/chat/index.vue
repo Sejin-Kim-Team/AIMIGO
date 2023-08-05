@@ -18,6 +18,8 @@ definePageMeta({
 
 useFirebase()
 
+const { y: winddowScrollY } = useWindowScroll()
+
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const aimigoStore = useAimigoStore()
 const smallerThanLg = breakpoints.smaller('lg')
@@ -36,12 +38,15 @@ const currentIndex = ref<number>(0)
 const loading = ref<boolean>(false)
 
 const chatRef = ref<{ scrollBottom: () => void } | null>()
+const el = ref<HTMLDivElement | null>(null)
 const inputRef = ref<HTMLInputElement>()
 const aimigoSize = computed(() => smallerThanLg.value ? 100 : 280)
 
 async function handleSubmit() {
   if (heart.value < 0)
     return alert('하트가 부족합니다 🥲')
+
+  window.scrollTo(0, 0)
 
   if (!message.value)
     return
@@ -92,7 +97,11 @@ tryOnMounted(async () => {
 
 <template>
   <article>
-    <div v-if="aimigo" class="relative grid grid-cols-6 lg:gap-8 gap-4 h-full">
+    <div
+      v-if="aimigo"
+      ref="el"
+      class="relative grid grid-cols-6 lg:gap-8 gap-4 h-full"
+    >
       <!-- Avatar Layer -->
       <div
         v-if="!smallerThanLg"
@@ -168,13 +177,13 @@ tryOnMounted(async () => {
         </form>
       </div>
 
-      <div class="fixed bottom-0 right-0" style="transform: translate(60px, 30px)">
+      <div class="fixed top-0 right-0" style="transform: translate(84px, -28px)">
         <KAvatar
           v-if="smallerThanLg"
           :avatar="aimigo.avatar"
           :current-index="currentIndex"
           :emotion="emotion"
-          :size="80"
+          :size="64"
         />
       </div>
     </div>

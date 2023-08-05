@@ -22,6 +22,7 @@ interface Chat {
 }
 
 const { status, getSession } = useAuth()
+const { firebaseApp } = useFirebase()
 
 const session = await getSession()
 const aimigo = ref<Aimigo | null>(null)

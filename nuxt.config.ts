@@ -73,6 +73,9 @@ export default defineNuxtConfig({
       clientId: process.env.NUXT_FCM_CLIENT_ID ?? '',
       certUrl: process.env.NUXT_FCM_CERT_URL ?? '',
     },
+    public: {
+      fcmVapidKey: process.env.NUXT_FCM_VAPID_KEY ?? '',
+    },
   },
   vite: {
     build: {

@@ -117,7 +117,6 @@ const sessionUserInfo = computed(() => user)
 
 tryOnMounted(() => {
   aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
-
   if (aimigo.value === null)
     navigateTo('/mypage/mbti-characters')
 })

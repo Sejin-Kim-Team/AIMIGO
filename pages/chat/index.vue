@@ -46,7 +46,7 @@ async function handleSubmit() {
   if (heart.value < 0)
     return alert('하트가 부족합니다 🥲')
 
-  window.scrollTo(0, 0)
+  // window.scrollTo(0, 0)
 
   if (!message.value)
     return
@@ -59,6 +59,8 @@ async function handleSubmit() {
     await nextTick()
     chatRef.value?.scrollBottom()
   })
+
+  window.scrollTo(0, el.value?.scrollHeight ?? 0)
   loading.value = false
 }
 
@@ -177,7 +179,7 @@ tryOnMounted(async () => {
         </form>
       </div>
 
-      <div class="fixed top-0 right-0" style="transform: translate(84px, -28px)">
+      <div class="fixed top-0 right-0" style="transform: translate(84px, -88px)">
         <KAvatar
           v-if="smallerThanLg"
           :avatar="aimigo.avatar"

@@ -1,18 +1,16 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import Avatar from '~/components/atoms/widgets/Avatar.vue'
 import KInput from '~/components/atoms/KInput.vue'
-import type { Aimigo } from '~/constants/characters.constants'
 import KButton from '~/components/atoms/KButton.vue'
+import { useAimigoStore } from '~/store/aimigo.store'
 
-const aimigo = ref<Aimigo | null>(null)
-const name = ref('')
+const aimigoStore = useAimigoStore()
+const { aimigo } = storeToRefs(aimigoStore)
 
-tryOnMounted(() => {
-  aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null')
-  name.value = aimigo.value?.name || 'AIMIGO'
-})
+const name = ref(aimigo.value.name ?? 'AIMIGO')
 
-async function onClickSubmit() {
+function onClickSubmit() {
   aimigo.value = {
     ...aimigo.value,
     name: name.value,
@@ -28,7 +26,7 @@ async function onClickSubmit() {
     },
   })
 
-  await navigateTo('/chat')
+  navigateTo('/chat')
 }
 </script>
 

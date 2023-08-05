@@ -25,9 +25,15 @@ const { signIn } = useAuth()
     <div class="card-body">
       <div class="card-actions">
         <h2 class="text-center w-full text-lg">
-          당신의 친구 AIMIGO! 와 함께 해 보세요 :)
+          당신의 친구 <span class="text-accent">AIMIGO!</span> 와 함께 해 보세요 :)
         </h2>
-        <KButton ref="btnRef" class="w-full btn-primary" @click="signIn('google')">
+        <KButton
+          ref="btnRef"
+          class="w-full btn-primary"
+          @click="signIn('google', {
+            callbackUrl: '/chat',
+          })"
+        >
           <Icon name="logos:google-icon" size="28" />
           구글 아이디로 로그인
         </KButton>

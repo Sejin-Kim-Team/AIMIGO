@@ -47,6 +47,9 @@ function clearTimer() {
 }
 
 function typeWriter() {
+  if (typeof window === 'undefined')
+    return
+
   let loop = 0
   if (data.charIndex < props.items[data.currentIndex].length) {
     if (!data.typeStatus)

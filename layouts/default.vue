@@ -5,12 +5,12 @@ import Footer from '~/components/organisms/Footer.vue'
 
 <template>
   <div>
-    <ClientOnly>
-      <Header />
-    </ClientOnly>
+    <Header />
+
     <main>
       <NuxtPage class="h-full" />
     </main>
+
     <Footer />
   </div>
 </template>

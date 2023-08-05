@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import LogRocket from 'logrocket'
+// import LogRocket from 'logrocket'
+//
+// LogRocket.init('gpgrhj/aimigo')
 
-LogRocket.init('gpgrhj/aimigo')
 const { firebaseApp } = useFirebase()
 </script>
 

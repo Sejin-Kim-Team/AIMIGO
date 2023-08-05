@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import KButton from '~/components/atoms/KButton.vue'
-import type { User } from '~/server/types/types'
+import { useAimigoStore } from '~/store/aimigo.store'
+import { useKSnackbar } from '~/composables/useKSnackbar'
 
+const aimigoStore = useAimigoStore()
+const snackbar = useKSnackbar()
 const { getSession } = useAuth()
+const { requestToken } = useFirebase()
 const myName = ref<string>('')
 const pushToken = ref<string>('')
 const pushEnabled = ref<boolean>(false)
 const startTime = ref<number>(9)
 const endTime = ref<number>(18)
-const thisUser = ref<User | null>(null)
-const { requestToken } = useFirebase()
+const user = computed(() => aimigoStore.user)
 
 function onChangeMyName(e: Event) {
   const target = e.target as HTMLInputElement
@@ -50,36 +53,41 @@ async function getUser() {
     params: { email },
   })
 
-  thisUser.value = data.value?.body ?? null
-
-  myName.value = thisUser.value?.name ?? ''
-  pushToken.value = thisUser.value?.pushToken ?? ''
-  pushEnabled.value = thisUser.value?.pushEnabled ?? false
-  startTime.value = thisUser.value?.pushPermitStartTime ?? 9
-  endTime.value = thisUser.value?.pushPermitEndTime ?? 18
+  myName.value = user.value?.name ?? ''
+  pushToken.value = user.value?.pushToken ?? ''
+  pushEnabled.value = user.value?.pushEnabled ?? false
+  startTime.value = user.value?.pushPermitStartTime ?? 9
+  endTime.value = user.value?.pushPermitEndTime ?? 18
 }
 
-getUser()
+tryOnMounted(() => aimigoStore.fetchUser())
 
-async function onSaveMyPage() {
-  // users/push
-  let token = ''
-  if (pushEnabled.value && pushToken.value === '') {
-    token = toRaw(await requestToken.value) ?? ''
-    console.log('Token is : ', token)
+async function handleSave() {
+  try {
+    let token = ''
+    if (pushEnabled.value && pushToken.value === '') {
+      token = toRaw(requestToken.value) ?? ''
+      console.log('Token is : ', token)
+    }
+
+    await useFetch('/api/users/push', {
+      params: { id: user.value?.id },
+      method: 'PUT',
+      body: {
+        name: myName.value,
+        pushToken: token,
+        pushEnabled: pushEnabled.value,
+        pushPermitStartTime: startTime.value,
+        pushPermitEndTime: endTime.value,
+      },
+    })
+
+    snackbar.success('저장되었습니다 😀')
   }
-
-  await useFetch('/api/users/push', {
-    params: { id: thisUser.value?.id },
-    method: 'PUT',
-    body: {
-      name: myName.value,
-      pushToken: token,
-      pushEnabled: pushEnabled.value,
-      pushPermitStartTime: startTime.value,
-      pushPermitEndTime: endTime.value,
-    },
-  })
+  catch (e) {
+    console.error(e)
+    snackbar.error('내 정보 수정에 실패했습니다 🥲')
+  }
 }
 </script>
 
@@ -134,10 +142,10 @@ async function onSaveMyPage() {
     </div>
   </div>
   <div class="flex justify-end gap-4">
-    <KButton @click="navigateTo('/chat')">
+    <KButton @click="$router.go(-1)">
       돌아가기
     </KButton>
-    <KButton brand="primary" @click="onSaveMyPage">
+    <KButton brand="primary" @click="handleSave">
       저장하기
     </KButton>
   </div>

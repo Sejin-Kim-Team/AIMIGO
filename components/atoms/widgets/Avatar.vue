@@ -88,7 +88,7 @@ watchEffect(async () => {
       width="${avatarSize.value}"
       height="${avatarSize.value}"
       viewBox="0 0 ${avatarSize.value / 0.7} ${avatarSize.value / 0.7}"
-      preserveAspectRatio="xMidYMax meet키"
+      preserveAspectRatio="xMidYMax meet"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

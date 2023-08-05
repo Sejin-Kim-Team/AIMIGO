@@ -13,7 +13,8 @@ function startPushScheduler() {
   scheduler.run (() => {
     console.log('push scheduler started')
     const today = new Date()
-    const time = today.getHours()
+    const time = today.getHours() === 0 ? 24 : today.getHours()
+
     const users = getUsersWherePushEnabled(time)
       .then(async (users) => {
         console.log(users.length)
@@ -22,14 +23,14 @@ function startPushScheduler() {
           const mbti = user.aimigoMbti
           const usedEnergy = useEnergy(user.aimigoEnergy)
 
-          const sendPushRatio = mbti !== null && mbti.toUpperCase().startsWith('E') ? 0.8 : 0.5
+          const sendPushRatio = mbti !== null && mbti.toUpperCase().startsWith('E') ? 0.5 : 0.3
           const sendPush = (Math.random() < sendPushRatio && token !== null)
-          console.log(`send push: ${sendPush}, usedE: ${usedEnergy}, token: ${token}`)
-          if (sendPush && usedEnergy >= 0) {
+          console.log(`send push: ${sendPush}, usedEnergy: ${usedEnergy}, token: ${token}`)
+          if (sendPush && usedEnergy >= 0 && token !== null && token !== '') {
             const sendResult = await messaging.send(
               {
                 token,
-                notification: {
+                data: {
                   title: 'AIMIGO!',
                   body: getNotificationSentence(user.name),
                 },
@@ -44,7 +45,7 @@ function startPushScheduler() {
       }).finally(() => {
         console.log('push scheduler finished')
       })
-  }).cron('0 */1 * * *', 'Asia/Seoul')
+  }).cron('*/10 * * * *', 'Asia/Seoul')
 }
 function getNotificationSentence(name: string): string {
   const sentences = [

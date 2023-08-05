@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { debouncedWatch } from '@vueuse/shared'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import KChatWrapper from '~/components/molecules/Chat/KChatWrapper.vue'
 import KInput from '~/components/atoms/KInput.vue'
 import KButton from '~/components/atoms/KButton.vue'
@@ -15,8 +16,12 @@ definePageMeta({
   name: 'Chat',
   layout: 'default',
 })
+
 useFirebase()
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
 const aimigoStore = useAimigoStore()
+const smallerThanLg = breakpoints.smaller('lg')
 
 const {
   chats,
@@ -34,6 +39,7 @@ const loading = ref<boolean>(false)
 
 const chatRef = ref<{ scrollBottom: () => void } | null>()
 const inputRef = ref<HTMLInputElement>()
+const aimigoSize = computed(() => smallerThanLg.value ? 100 : 280)
 
 async function handleSubmit() {
   if (heart.value < 0)
@@ -88,9 +94,12 @@ tryOnMounted(async () => {
 
 <template>
   <article>
-    <div v-if="aimigo" class="grid grid-cols-6 md:gap-8 gap-4 h-full">
+    <div v-if="aimigo" class="relative grid grid-cols-6 lg:gap-8 gap-4 h-full">
       <!-- Avatar Layer -->
-      <div class="md:col-span-2 col-span-6">
+      <div
+        v-if="!smallerThanLg"
+        class="lg:col-span-2 col-span-6"
+      >
         <div class="card w-full bg-base-200 shadow-xl">
           <div class="flex justify-end">
             <KButton class="btn-ghost text-primary" @click="navigateTo('/mypage/mbti-characters')">
@@ -113,7 +122,9 @@ tryOnMounted(async () => {
       </div>
 
       <!-- Chat Layer -->
-      <div class="md:col-span-4 col-span-6 h-full relative">
+      <div
+        class="lg:col-span-4 col-span-6 h-full relative"
+      >
         <KChatWrapper
           ref="chatRef"
           class="chat-wrapper mb-4"
@@ -124,19 +135,18 @@ tryOnMounted(async () => {
               :time="chat.time"
               :end="chat.sender === senderId"
             >
-              <template v-if="index === chats.length - 1 && chat.sender !== senderId">
-                <ClientOnly>
-                  <Typing
-                    :items="[chat.message]"
-                    :type-speed="33"
-                    @typing="handleTyping"
-                    @typed="handleTyped"
-                  />
-                </ClientOnly>
-              </template>
-              <template v-else>
-                {{ chat.message }}
-              </template>
+              <ClientOnly>
+                <Typing
+                  v-if="index === chats.length - 1 && chat.sender !== senderId"
+                  :items="[chat.message]"
+                  :type-speed="33"
+                  @typing="handleTyping"
+                  @typed="handleTyped"
+                />
+                <template v-else>
+                  {{ chat.message }}
+                </template>
+              </ClientOnly>
             </KChat>
           </template>
         </KChatWrapper>
@@ -159,6 +169,16 @@ tryOnMounted(async () => {
           </div>
         </form>
       </div>
+
+      <div class="fixed bottom-0 right-0" style="transform: translate(60px, 30px)">
+        <KAvatar
+          v-if="smallerThanLg"
+          :avatar="aimigo.avatar"
+          :current-index="currentIndex"
+          :emotion="emotion"
+          :size="80"
+        />
+      </div>
     </div>
   </article>
 </template>
@@ -169,7 +189,7 @@ article {
 }
 
 .chat-wrapper {
-  height: calc(100vh - 280px);
+  height: calc(100vh - 160px);
   overflow-y: scroll;
 }
 </style>

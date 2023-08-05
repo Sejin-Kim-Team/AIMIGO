@@ -19,6 +19,8 @@ const computedClass = computed(() => {
 
 <template>
   <div :class="computedClass">
+    <slot name="avatar" />
+
     <div class="chat-header">
       {{ sender }}
       <time v-if="time" class="text-xs opacity-50">

@@ -1,17 +1,9 @@
 <script setup lang="ts">
-import { debounce } from '~/utils/async-utils'
-
 defineOptions({
   inheritAttrs: true,
 })
 
-const emits = defineEmits(['updated'])
-
 const el = ref<HTMLDivElement>()
-
-const debouncedUpdate = debounce(() => emits('updated'), 1000)
-
-onUpdated(debouncedUpdate)
 
 function scrollBottom() {
   el.value?.scrollTo({

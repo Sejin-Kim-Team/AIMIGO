@@ -43,6 +43,10 @@ tryOnMounted(() => aimigoStore.fetchUser())
               <a>마이페이지</a>
             </li>
 
+            <li @click="navigateTo('/mypage/mbti-characters')">
+              <a>AIMIGO! 설정하기</a>
+            </li>
+
             <li @click="signOut({ callbackUrl: '/' })">
               <a>로그아웃</a>
             </li>

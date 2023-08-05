@@ -22,6 +22,12 @@ const props = withDefaults(defineProps<VueColorAvatarProps>(), {
   emotion: 'Normal',
 })
 
+const defaultSize = 280
+
+const computedStyle = computed(() => ({
+  transform: `scale(${props.size / defaultSize})`,
+}))
+
 const currentAvatar = computed(() => {
   const itemIndex = props.currentIndex % 3 === 0 ? 0 : 1
   let emotionalFace = NormalEmotionalAvatarStates[itemIndex]
@@ -61,7 +67,10 @@ const currentAvatar = computed(() => {
 </script>
 
 <template>
-  <Avatar :option="currentAvatar" />
+  <Avatar
+    :option="currentAvatar"
+    :style="computedStyle"
+  />
 </template>
 
 <style scoped lang="scss">

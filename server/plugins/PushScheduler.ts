@@ -45,7 +45,7 @@ function startPushScheduler() {
       }).finally(() => {
         console.log('push scheduler finished')
       })
-  }).cron('*/5 * * * * *', 'Asia/Seoul')
+  }).cron('*/10 * * * *', 'Asia/Seoul')
 }
 function getNotificationSentence(name: string): string {
   const sentences = [

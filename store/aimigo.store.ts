@@ -55,7 +55,7 @@ export const useAimigoStore = defineStore('aimigo', () => {
 
     return 'Normal'
   })
-  // const heart = computed<number>(() => data.value?.body.heart ?? 0)
+
   const senderId = computed<string | null>(() => session.value?.user?.name ?? null)
 
   async function sendMessage(message: string) {
@@ -94,7 +94,7 @@ export const useAimigoStore = defineStore('aimigo', () => {
     const chat: Chat = {
       sender: aimigo.value.name,
       time: new Date().toLocaleTimeString(),
-      message,
+      message: _data.value.body.text,
     }
 
     return chat

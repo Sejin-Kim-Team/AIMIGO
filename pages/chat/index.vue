@@ -8,6 +8,7 @@ import KChat from '~/components/molecules/Chat/KChat.vue'
 import Typing from '~/components/atoms/Typing.vue'
 import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 import { useAimigoStore } from '~/store/aimigo.store'
+import { useKSnackbar } from '~/composables/useKSnackbar'
 
 definePageMeta({
   name: 'Chat',
@@ -21,7 +22,10 @@ const {
   aimigo,
   senderId,
   emotion,
+  heart,
 } = storeToRefs(aimigoStore)
+
+const snackbar = useKSnackbar()
 
 const message = ref<string>('')
 const currentIndex = ref<number>(0)
@@ -31,6 +35,9 @@ const chatRef = ref<HTMLDivElement>()
 const inputRef = ref<HTMLInputElement>()
 
 async function handleSubmit() {
+  if (heart.value < 0)
+    return snackbar.error('하트가 부족합니다 🥲')
+
   if (!message.value)
     return
 
@@ -115,7 +122,7 @@ function handleTyped() {
               class="w-full join-item"
             />
 
-            <KButton class="join-item rounded-r-full" type="submit" :disabled="loading">
+            <KButton class="join-item rounded-r-full" type="submit" :disabled="loading || heart === 0">
               <Icon :name="loading ? CHAT_MESSAGE_SENDING : SEND_MESSAGE" />
             </KButton>
           </div>

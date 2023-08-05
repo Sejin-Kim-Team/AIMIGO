@@ -23,7 +23,7 @@ function onClickSubmit() {
 <template>
   <main class="mb-8">
     <div class="mb-8 w-full h-[68px] pb-2 flex items-end justify-between align-baseline sticky top-[-1px] z-10 bg-base-100" style="vertical-align: baseline;">
-      <span class="text-xl content-baseline text-gray-400">당신의 AIMIGO 를 골라주세요!</span>
+      <span class="text-xl content-baseline text-gray-400">당신이 대화하고 싶은 AIMIGO 를 골라주세요!</span>
       <div v-if="selected" class="flex justify-end">
         <KButton class="btn-primary" @click="onClickSubmit">
           다음

@@ -130,7 +130,7 @@ tryOnMounted(() => {
       <div class="md:col-span-2 col-span-6">
         <div class="card w-full bg-base-200 shadow-xl">
           <div class="flex justify-end">
-            <KButton @click="navigateTo('/mypage/mbt료i-characters')">
+            <KButton @click="navigateTo('/mypage/mbti-characters')">
               <Icon :name="SETTING" />
             </KButton>
           </div>

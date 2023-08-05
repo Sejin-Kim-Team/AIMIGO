@@ -5,8 +5,6 @@ import KButton from '~/components/atoms/KButton.vue'
 import { CHAT_MESSAGE_SENDING, SEND_MESSAGE, SETTING } from '~/constants/icon.constants'
 import KChat from '~/components/molecules/Chat/KChat.vue'
 import Typing from '~/components/atoms/Typing.vue'
-import type { AvatarOption } from '~/types/widget.types'
-import { PlaygroundAvatar } from '~/constants/charactor.constants'
 import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
 import type { Aimigo } from '~/constants/characters.constants'
 
@@ -21,7 +19,7 @@ interface Chat {
   message: string
 }
 
-const { status, getSession } = useAuth()
+const { getSession } = useAuth()
 
 const session = await getSession()
 const aimigo = ref<Aimigo | null>(null)
@@ -29,14 +27,13 @@ const aimigo = ref<Aimigo | null>(null)
 const loading = ref<boolean>(false)
 const message = ref<string>('')
 const currentIndex = ref<number>(0)
-const character = ref<AvatarOption>(PlaygroundAvatar)
 const emotion = ref<'Normal' | 'Positive' | 'Negative'>('Normal')
 
 const chats = ref<Chat[]>([])
 const chatRef = ref<HTMLDivElement>()
 const inputRef = ref<HTMLInputElement>()
 
-const { width, left } = useElementBounding(chatRef)
+const { width } = useElementBounding(chatRef)
 const { focused: inputFocused } = useFocus(inputRef)
 
 const senderId = ref(session.user!.name as string)
@@ -113,10 +110,9 @@ async function requestMessage(message: string) {
 }
 
 const { user } = await getSession()
-const sessionUserInfo = computed(() => user)
 
 tryOnMounted(() => {
-  if (!window)
+  if (typeof window === 'undefined')
     return
 
   aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null

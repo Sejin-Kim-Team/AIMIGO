@@ -23,7 +23,7 @@ const computedHeart = computed(() => {
 })
 
 async function getUser() {
-  if (!window)
+  if (typeof window === 'undefined')
     return
 
   const session = await getSession()

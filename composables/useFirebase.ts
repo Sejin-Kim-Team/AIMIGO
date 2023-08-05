@@ -17,7 +17,8 @@ export function useFirebase() {
   const firebaseApp = initializeApp(firebaseConfig)
   const messagingRef = shallowRef<Messaging | null>(null)
   const requestTokenRef = ref<string | null>(null)
-
+  const runtimeConfig = useRuntimeConfig()
+  const vapidKey = runtimeConfig.public.fcmVapidKey
   async function tryRequestPermission() {
     if (!window || !navigator || !Notification)
       return
@@ -40,8 +41,14 @@ export function useFirebase() {
     onMessage(messagingRef.value, (payload) => {
       console.log('Message received. ', payload)
     })
-    const requestToken = await getToken(messaging, { vapidKey: 'BIUfNhBiY50v4ZzjRYOE4azoV7KAKpVtehBK0zAoXPvNsjD19m-C32CD_9H02DUlrIwAiz404-qLxcsAwbS3nI8' })
+    const requestToken = await getToken(messaging, { vapidKey })
     requestTokenRef.value = requestToken
+    await useFetch('/api/users/push', {
+      method: 'PUT',
+      body: {
+        pushToken: requestTokenRef.value,
+      },
+    })
   }
 
   tryOnMounted(async () => {

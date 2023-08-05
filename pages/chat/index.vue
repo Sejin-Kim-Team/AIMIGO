@@ -14,7 +14,7 @@ definePageMeta({
   name: 'Chat',
   layout: 'default',
 })
-
+useFirebase()
 const aimigoStore = useAimigoStore()
 
 const {
@@ -26,7 +26,6 @@ const {
 } = storeToRefs(aimigoStore)
 
 const snackbar = useKSnackbar()
-
 const message = ref<string>('')
 const currentIndex = ref<number>(0)
 const loading = ref<boolean>(false)

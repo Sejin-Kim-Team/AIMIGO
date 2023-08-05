@@ -56,9 +56,9 @@ export const MBTI_LIST = [
   'ISTP',
 ]
 
-type MBTI = 'ENFJ' | 'ENFP' | 'ENTJ' | 'ENTP' | 'ESFJ' | 'ESFP' | 'ESTJ' | 'ESTP' | 'INFJ' | 'INFP' | 'INTJ' | 'INTP' | 'ISFJ' | 'ISFP' | 'ISTJ' | 'ISTP'
+type MBTIType = 'ENFJ' | 'ENFP' | 'ENTJ' | 'ENTP' | 'ESFJ' | 'ESFP' | 'ESTJ' | 'ESTP' | 'INFJ' | 'INFP' | 'INTJ' | 'INTP' | 'ISFJ' | 'ISFP' | 'ISTJ' | 'ISTP'
 export interface Aimigo {
-  type: MBTI
+  type: MBTIType
   name: string
   avatar: any
 }

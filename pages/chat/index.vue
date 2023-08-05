@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import KChatWrapper from '~/components/molecules/Chat/KChatWrapper.vue'
 import KInput from '~/components/atoms/KInput.vue'
 import KButton from '~/components/atoms/KButton.vue'
@@ -6,55 +7,39 @@ import { CHAT_MESSAGE_SENDING, SEND_MESSAGE, SETTING } from '~/constants/icon.co
 import KChat from '~/components/molecules/Chat/KChat.vue'
 import Typing from '~/components/atoms/Typing.vue'
 import KAvatar from '~/components/molecules/widgets/KAvatar.vue'
-import type { Aimigo } from '~/constants/characters.constants'
+import { useAimigoStore } from '~/store/aimigo.store'
 
 definePageMeta({
   name: 'Chat',
   layout: 'default',
 })
 
-interface Chat {
-  sender: string
-  time: string
-  message: string
-}
+const aimigoStore = useAimigoStore()
 
-const { getSession } = useAuth()
+const {
+  chats,
+  aimigo,
+  senderId,
+  emotion,
+} = storeToRefs(aimigoStore)
 
-const session = await getSession()
-const aimigo = ref<Aimigo | null>(null)
-
-const loading = ref<boolean>(false)
 const message = ref<string>('')
 const currentIndex = ref<number>(0)
-const emotion = ref<'Normal' | 'Positive' | 'Negative'>('Normal')
+const loading = ref<boolean>(false)
 
-const chats = ref<Chat[]>([])
 const chatRef = ref<HTMLDivElement>()
 const inputRef = ref<HTMLInputElement>()
 
-const { width } = useElementBounding(chatRef)
-const { focused: inputFocused } = useFocus(inputRef)
-
-const senderId = ref(session.user!.name as string)
-
 async function handleSubmit() {
+  if (!message.value)
+    return
+
   const _message = `${message.value}`
   message.value = ''
 
-  const chat: Chat = {
-    sender: senderId.value,
-    time: new Date().toISOString(),
-    message: _message,
-  }
-
-  chats.value.push(chat)
-
   loading.value = true
-  await requestMessage(_message)
+  await aimigoStore.sendMessage(_message)
   loading.value = false
-
-  inputFocused.value = true
 }
 
 function handleTyping() {
@@ -64,61 +49,6 @@ function handleTyping() {
 function handleTyped() {
   currentIndex.value = 0
 }
-
-async function requestMessage(message: string) {
-  const { data } = await useFetch<{
-    body: {
-      text: string
-      heart: number
-      emotion: {
-        sentiment: 'netural' | 'positive' | 'negative'
-        confidence: {
-          negative: number
-          positive: number
-          neutral: number
-        }
-      }
-    }
-  }>('/api/chat', {
-    method: 'post',
-    body: {
-      message,
-      name: aimigo.value!.name,
-      mbti: `${aimigo.value!.type}`,
-    },
-  })
-
-  if (data.value === null)
-    return
-
-  const chat: Chat = {
-    sender: aimigo.value!.name,
-    time: new Date().toISOString(),
-    message: data.value.body.text,
-  }
-
-  const sentiment = data.value.body.emotion.sentiment
-
-  if (sentiment === 'netural')
-    emotion.value = 'Normal'
-  else if (sentiment === 'positive')
-    emotion.value = 'Positive'
-  else if (sentiment === 'negative')
-    emotion.value = 'Negative'
-
-  chats.value.push(chat)
-}
-
-const { user } = await getSession()
-
-tryOnMounted(() => {
-  if (typeof window === 'undefined')
-    return
-
-  aimigo.value = JSON.parse(localStorage.getItem('aimigo') || 'null') as Aimigo | null
-  if (aimigo.value === null)
-    navigateTo('/mypage/mbti-characters')
-})
 </script>
 
 <template>

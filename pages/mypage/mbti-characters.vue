@@ -1,18 +1,22 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import Avatar from '~/components/atoms/widgets/Avatar.vue'
 import KButton from '~/components/atoms/KButton.vue'
 import type { Aimigo } from '~/constants/characters.constants'
 import { MBTIItems } from '~/constants/characters.constants'
+import { useAimigoStore } from '~/store/aimigo.store'
 
+const aimigoStore = useAimigoStore()
+const { aimigo } = storeToRefs(aimigoStore)
 const selected = ref<Aimigo | null>(null)
 const items = ref(MBTIItems)
 function onClickCharacter(item: any) {
   selected.value = item
 }
 
-async function onClickSubmit() {
-  localStorage.setItem('aimigo', JSON.stringify(toRaw(selected.value)))
-  await navigateTo('/mypage/my-aimigo')
+function onClickSubmit() {
+  aimigo.value = toRaw(selected.value)
+  navigateTo('/mypage/my-aimigo')
 }
 </script>
 

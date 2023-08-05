@@ -3,16 +3,17 @@ import Avatar01 from '~/assets/images/avatar-01.png'
 import Avatar02 from '~/assets/images/avatar-02.png'
 import { useElementHover } from '#imports'
 import { HEART_CHARGING, HEART_FULL, HEART_ZERO } from '~/constants/icon.constants'
-import type { User } from '~/server/types/types'
 import { HEART_MAX } from '~/constants/heart.constants'
+import { useAimigoStore } from '~/store/aimigo.store'
 
-const { status, signOut, getSession } = useAuth()
+const { status, signOut } = useAuth()
+const aimigoStore = useAimigoStore()
+const heart = computed(() => aimigoStore.heart)
+const user = computed(() => aimigoStore.user)
+
 const iconRef = ref<HTMLElement>()
 const iconIsHovered = useElementHover(iconRef)
 const iconSrc = computed(() => iconIsHovered.value ? Avatar02 : Avatar01)
-
-const thisUser = ref<User | null>(null)
-const heart = ref<number>(5)
 
 const computedHeart = computed(() => {
   if (heart.value === HEART_MAX)
@@ -22,32 +23,7 @@ const computedHeart = computed(() => {
   else return HEART_CHARGING
 })
 
-async function getUser() {
-  if (typeof window === 'undefined')
-    return
-
-  const session = await getSession()
-  if (!session)
-    throw new Error('Unauthenticated')
-
-  const email = session.user?.email ?? ''
-  const { data } = await useFetch('/api/users', {
-    method: 'GET',
-    params: { email },
-  })
-
-  thisUser.value = data.value?.body ?? null
-
-  if (!thisUser.value)
-    throw new Error('User not found')
-
-  heart.value = thisUser.value.remainedHeart ?? 0
-  if (heart.value > HEART_MAX)
-    heart.value = HEART_MAX
-  // TODO: 실제로 update 로직 필요.
-}
-
-tryOnMounted(() => getUser())
+tryOnMounted(() => aimigoStore.fetchUser())
 </script>
 
 <template>
@@ -58,9 +34,9 @@ tryOnMounted(() => getUser())
           <label tabindex="0" class="btn btn-ghost m-1">
             <img :src="iconSrc" alt="avatar" class="w-8 h-8">
           </label>
-          <ul v-if="status === 'authenticated' && thisUser" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <ul v-if="status === 'authenticated' && user" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
             <li class="p-4 text-lg">
-              반가워요, {{ thisUser.name }}!
+              반가워요, {{ user.name }}!
             </li>
 
             <li @click="navigateTo('/mypage')">

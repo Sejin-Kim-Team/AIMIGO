@@ -60,7 +60,7 @@ async function handleSubmit() {
     chatRef.value?.scrollBottom()
   })
 
-  window.scrollTo(0, el.value?.scrollHeight ?? 0)
+  // window.scrollTo(0, el.value?.scrollHeight ?? 0)
   loading.value = false
 }
 
@@ -84,10 +84,10 @@ tryOnMounted(async () => {
   const recentDate = localStorage.getItem('aimigo-recent-date') ?? null
   let message = `안녕 ${user.value?.name ?? ''}! 반가워, 나는 ${aimigo.value.name} 이라고해! 잘부탁해 😉`
 
-  if (recentDate) {
+  if (recentDate)
     message = `${user.value?.name ?? ''} 오랜만이네! 요즘 어떻게 지내? 😙`
-    localStorage.setItem('aimigo-recent-date', new Date().toLocaleTimeString())
-  }
+
+  localStorage.setItem('aimigo-recent-date', new Date().toLocaleTimeString())
 
   chats.value = [{
     sender: aimigo.value.name,
@@ -179,6 +179,7 @@ tryOnMounted(async () => {
         </form>
       </div>
 
+      <!-- Floating Avatar layer (mobile only) -->
       <div class="fixed top-0 right-0" style="transform: translate(84px, -88px)">
         <KAvatar
           v-if="smallerThanLg"
